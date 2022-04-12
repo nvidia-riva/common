@@ -6,7 +6,7 @@ syntax = "proto3";
 package nvidia.riva;
 
 option cc_enable_arenas = true;
-
+option go_package = "nvidia.com/riva_speech";
 
 /*
  * AudioEncoding specifies the encoding of the audio bytes in the encapsulating message.
