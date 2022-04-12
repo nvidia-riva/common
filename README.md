@@ -4,7 +4,7 @@
 
 ## gRPC & Protocol Buffers
 
-Riva clients use [gRPC](https://grpc.io) to communicate with the Riva server. The APIs and message types are defined in `riva/proto`. Complete API documentation is available in the [Riva user documentation](https://docs.nvidia.com/deeplearning/riva/user-guide/docs/protobuf-api/protobuf-api-root.html).
+Riva clients use [gRPC](https://grpc.io) to communicate with the Riva server. The APIs and message types are defined in `riva/proto`. Complete API documentation is available in the [Riva user documentation](https://docs.nvidia.com/deeplearning/riva/user-guide/docs/reference/protos/protos.html).
 
 ### Compile Protocol Buffers
 
@@ -21,7 +21,7 @@ make golang
 NVIDIA offers Riva client packages which include various language-specific bindings for the protocol buffers:
 
 * **C++**: [nvidia-riva/cpp-clients](https://github.com/nvidia-riva/cpp-clients)
-* **Python**: [nvidia-riva/riva-python-clients](https://github.com/nvidia-riva/python-clients)
+* **Python**: [nvidia-riva/python-clients](https://github.com/nvidia-riva/python-clients)
 
 ## Contributing
 
