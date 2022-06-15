@@ -84,7 +84,7 @@ message RecognitionConfig {
 
     //  Sample rate in Hertz of the audio data sent in the
     // `RecognizeAudio` or `StreamingRecognizeRequest` messages.
-    //  It allows to resample the audio to match the model rate and thus, must be equal to the model rate.
+    //  It allows to resample the audio to match the model rate.
     //  For example, if the given model is trained on 16kHz audio and given input audio rate is 44.1kHz, the sample rate 
     //  for downsampling will be 16kHz. Similarly, if the given input audio rate is 8kHz, then the sample rate for upsampling will
     //  be 16kHz.
