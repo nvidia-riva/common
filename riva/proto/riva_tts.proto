@@ -26,6 +26,14 @@ message SynthesizeSpeechRequest {
     string language_code = 2;
     // audio encoding params
     AudioEncoding encoding = 3;
+ 
+    //  The sample rate in hertz (Hz) of the audio output requested through `SynthesizeSpeechRequest` messages.
+    //  Models produce an output at a fixed rate. The sample rate enables you to resample the generated audio output if required.
+    //  You use the sample rate to up-sample or down-sample the audio for various scenarios. For example, the sample rate can be set to 8kHz (kilohertz) if the output
+    //  audio is desired for a low bandwidth application.
+    //  The sample rate values below 8kHz will not produce any meaningful output. Also, up-sampling too much will increase the
+    //  size of the output without improving the output audio quality.
+
     int32 sample_rate_hz = 4;
     // voice params
     string voice_name = 5;
