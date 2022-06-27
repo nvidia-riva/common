@@ -1,5 +1,11 @@
-// SPDX-FileCopyrightText: Copyright (c) 2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
-// SPDX-License-Identifier: MIT
+// Copyright (c) 2022, NVIDIA CORPORATION.  All rights reserved.
+//
+// NVIDIA CORPORATION and its licensors retain all intellectual property
+// and proprietary rights in and to this software, related documentation
+// and any modifications thereto.  Any use, reproduction, disclosure or
+// distribution of this software and related documentation without an express
+// license agreement from NVIDIA CORPORATION is strictly prohibited.
+
 
 syntax = "proto3";
 
@@ -26,15 +32,15 @@ message SynthesizeSpeechRequest {
     string language_code = 2;
     // audio encoding params
     AudioEncoding encoding = 3;
-    
-    //  Sample rate in Hertz of the audio output requested through `SynthesizeSpeechRequest` messages. 
-    //  Models produce output at a fixed rate and sample rate allows to resample the generated audio output if required. 
-    //  It can be used to upsample or downsample the audio for various scenarios. For example, sample rate can be set 8kHz if the output
+ 
+    //  The sample rate in hertz (Hz) of the audio output requested through `SynthesizeSpeechRequest` messages.
+    //  Models produce an output at a fixed rate. The sample rate enables you to resample the generated audio output if required.
+    //  You use the sample rate to up-sample or down-sample the audio for various scenarios. For example, the sample rate can be set to 8kHz (kilohertz) if the output
     //  audio is desired for a low bandwidth application.
-    //  Sample rate value below 8kHz will not produce any meaningful output. Also, upsampling way too much will only increase the 
-    //  size of the output without improving any output audio quality.
+    //  The sample rate values below 8kHz will not produce any meaningful output. Also, up-sampling too much will increase the
+    //  size of the output without improving the output audio quality.
+
     int32 sample_rate_hz = 4;
-    
     // voice params
     string voice_name = 5;
 }

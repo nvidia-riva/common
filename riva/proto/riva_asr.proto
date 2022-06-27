@@ -1,7 +1,5 @@
-// SPDX-FileCopyrightText: Copyright (c) 2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
-// SPDX-License-Identifier: MIT
-
 // Copyright 2019 Google LLC.
+// Copyright (c) 2022, NVIDIA CORPORATION. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -82,13 +80,10 @@ message RecognitionConfig {
     // All encodings support only 1 channel (mono) audio.
     AudioEncoding encoding = 1;
 
-    //  Sample rate in Hertz of the audio data sent in the
-    // `RecognizeAudio` or `StreamingRecognizeRequest` messages.
-    //  It allows to resample the audio to match the model rate.
-    //  For example, if the given model is trained on 16kHz audio and given input audio rate is 44.1kHz, the sample rate 
-    //  for downsampling will be 16kHz. Similarly, if the given input audio rate is 8kHz, then the sample rate for upsampling will
-    //  be 16kHz.
-    //  Sample rate value below 8kHz will not produce any meaningful output. 
+    //  The sample rate in hertz (Hz) of the audio data sent in the
+    // `RecognizeRequest` or `StreamingRecognizeRequest` messages.
+    //  The Riva server will automatically down-sample/up-sample the audio to match the ASR acoustic model sample rate.
+    //  The sample rate value below 8kHz will not produce any meaningful output.
     int32 sample_rate_hertz = 2;
 
     // Required. The language of the supplied audio as a
@@ -170,13 +165,12 @@ message StreamingRecognitionConfig {
 // Provides "hints" to the speech recognizer to favor specific words and phrases
 // in the results.
 message SpeechContext {
-  // A list of strings containing words so that
+
+  // A list of strings containing words and phrases "hints" so that
   // the speech recognition is more likely to recognize them. This can be used
-  // to improve the accuracy for specific words, for example, if
-  // specific commands are typically spoken by the user. 
-  // Note that it is currently not possible to boost phrases or combination of
-  // words separated by spaces. This will be supported in a future version of 
-  // Riva.
+  // to improve the accuracy for specific words and phrases, for example, if
+  // specific commands are typically spoken by the user. This can also be used
+  // to add additional words to the vocabulary of the recognizer. 
   repeated string phrases = 1;
 
   // Hint Boost. Positive value will increase the probability that a specific
