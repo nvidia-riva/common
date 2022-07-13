@@ -150,6 +150,11 @@ message RecognitionConfig {
     // 'false' applies inverse text normalization, also this is the default
     bool verbatim_transcripts = 14;
 
+    // Config to enable speaker diarization and set additional
+    // parameters. For non-streaming requests, the diarization results will be provided only
+    // in the top alternative of the FINAL SpeechRecognitionResult.
+    SpeakerDiarizationConfig diarization_config = 19;
+
     // Custom fields for passing request-level
     // configuration options to plugins used in the
     // model pipeline.
@@ -170,6 +175,23 @@ message StreamingRecognitionConfig {
     bool interim_results = 2;
 }
 
+// Config to enable speaker diarization.
+message SpeakerDiarizationConfig {
+  // If 'true', enables speaker detection for each recognized word in
+  // the top alternative of the recognition result using a speaker_tag provided
+  // in the WordInfo.
+  bool enable_speaker_diarization = 1;
+
+  // Minimum number of speakers in the conversation. This range gives you more
+  // flexibility by allowing the system to automatically determine the correct
+  // number of speakers. If not set, the default value is 2.
+  int32 min_speaker_count = 2;
+
+  // Maximum number of speakers in the conversation. This range gives you more
+  // flexibility by allowing the system to automatically determine the correct
+  // number of speakers. If not set, the default value is 6.
+  int32 max_speaker_count = 3;
+}
 
 // Provides "hints" to the speech recognizer to favor specific words and phrases
 // in the results.
@@ -252,6 +274,13 @@ message WordInfo {
 
   // The word corresponding to this set of information.
   string word = 3;
+
+  // Output only. A distinct integer value is assigned for every speaker within
+  // the audio. This field specifies which one of those speakers was detected to
+  // have spoken this word. Value ranges from '1' to diarization_speaker_count.
+  // speaker_tag is set if enable_speaker_diarization = 'true' and only in the
+  // top alternative.
+  int32 speaker_tag = 5;
 }
 
 
