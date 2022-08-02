@@ -101,11 +101,10 @@ message RecognitionConfig {
     // If omitted, will return a maximum of one.
     int32 max_alternatives = 4;
 
-    // Custom field to enable profanity filtering for the generated transcripts.
-    // 'true' will allow server to filter out profanities, replacing all but the 
-    // initial character in each filtered word with asterisks, e.g. "f***".
-    // If set to `false` or omitted, profanities
-    // won't be filtered out. Default is false.
+    // A custom field that enables profanity filtering for the generated transcripts.
+    // If set to 'true', the server filters out profanities, replacing all but the initial
+    // character in each filtered word with asterisks. For example, "x**".
+    // If set to `false` or omitted, profanities will not be filtered out. The default is `false`.
     bool profanity_filter=5; 
 
     // Array of SpeechContext.
