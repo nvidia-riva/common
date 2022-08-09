@@ -222,12 +222,12 @@ message SpeechRecognitionAlternative {
   // Transcript text representing the words that the user spoke.
   string transcript = 1;
 
-  // The non-normalized confidence estimate. A higher number
-  // indicates an estimated greater likelihood that the recognized words are
-  // correct. This field is set only for a non-streaming
-  // result or, of a streaming result where `is_final=true`.
-  // This field is not guaranteed to be accurate and users should not rely on it
-  // to be always provided.
+  // The non-normalized confidence estimate. A higher number indicates an
+  // estimated greater likelihood that the recognized words are correct. This
+  // field is set only for a non-streaming result or, for a streaming result
+  // where is_final=true. This field is not guaranteed to be accurate and users
+  // should not rely on it to be always provided. The default of 0.0 is a
+  // sentinel value indicating confidence was not set.
   float confidence = 2;
 
   // A list of word-specific information for each recognized word. Only populated
@@ -251,8 +251,15 @@ message WordInfo {
 
   // The word corresponding to this set of information.
   string word = 3;
-}
 
+  // The confidence estimate between 0.0 and 1.0. A higher number indicates an
+  // estimated greater likelihood that the recognized words are correct. This
+  // field is set only for a non-streaming result or, for a streaming result
+  // where is_final=true. This field is not guaranteed to be accurate and users
+  // should not rely on it to be always provided. The default of 0.0 is a
+  // sentinel value indicating confidence was not set.
+  float confidence = 4;
+}
 
 // `StreamingRecognizeResponse` is the only message returned to the client by
 // `StreamingRecognize`. A series of zero or more `StreamingRecognizeResponse`
