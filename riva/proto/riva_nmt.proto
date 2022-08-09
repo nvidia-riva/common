@@ -1,0 +1,55 @@
+// Copyright (c) 2022, NVIDIA CORPORATION.  All rights reserved.
+//
+// NVIDIA CORPORATION and its licensors retain all intellectual property
+// and proprietary rights in and to this software, related documentation
+// and any modifications thereto.  Any use, reproduction, disclosure or
+// distribution of this software and related documentation without an express
+// license agreement from NVIDIA CORPORATION is strictly prohibited.
+
+syntax="proto3";
+
+package nvidia.riva.nmt;
+
+option cc_enable_arenas = true;
+option go_package = "nvidia.com/riva_speech";
+
+service RivaTranslation {
+  rpc TranslateText(TranslateTextRequest) returns (TranslateTextResponse) {}
+  rpc ListSupportedLanguagePairs(AvailableLanguageRequest) returns (AvailableLanguageResponse) {}
+}
+
+// request for synchronous translation of each text in texts.
+// Available languages can be queries using ListSupportLanguagePairs RPC.
+// source and target languages must be specified, are currently two character ISO codes.
+//
+message TranslateTextRequest {
+    repeated string texts = 1;
+    string model = 2;
+    string source_language = 3;
+    string target_language = 4;
+}
+
+// contains a single translation, collecting into the translate text response
+message Translation {
+    string text = 1;
+    string language = 2;
+}
+
+message TranslateTextResponse {
+    repeated Translation translations = 1;
+}
+
+// by default returns all available languages.
+// can specificy an individual model as well.
+message AvailableLanguageRequest {
+    // If empty returns all available languages.
+    string model = 1;
+}
+
+message AvailableLanguageResponse {
+     message LanguagePair {
+        repeated string src_lang = 1;
+        repeated string tgt_lang = 2;
+    }
+    map<string, LanguagePair> languages = 1;
+}
