@@ -13,14 +13,23 @@ package nvidia.riva.nmt;
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
 
+/*
+ *  RivaTranslation service provides rpcs to translate between languages.
+ *
+ */
 service RivaTranslation {
-  rpc TranslateText(TranslateTextRequest) returns (TranslateTextResponse) {}
+
+  // Translate text to text, from a source to a target language.  Currently source language is required, along with the model name.
+  // Multiple texts may be passed per request up to the given batch size for the model, which is set at translation pipeline creation time.
+rpc TranslateText(TranslateTextRequest) returns (TranslateTextResponse) {}
+
+  // Lists the available language pairs and models names to be used for TranslateText
   rpc ListSupportedLanguagePairs(AvailableLanguageRequest) returns (AvailableLanguageResponse) {}
 }
 
 // request for synchronous translation of each text in texts.
 // Available languages can be queries using ListSupportLanguagePairs RPC.
-// source and target languages must be specified, are currently two character ISO codes.
+// source and target languages must be specified, are currently two character ISO codes, this will likely change to BCP-47 inline with other Riva Services for GA.
 //
 message TranslateTextRequest {
     repeated string texts = 1;
@@ -30,11 +39,13 @@ message TranslateTextRequest {
 }
 
 // contains a single translation, collecting into the translate text response
+// Includes the language code, since with multi lingual models there are multiple possibilities.
 message Translation {
     string text = 1;
     string language = 2;
 }
 
+// Translations are returned as text:language pairs.  These are 1:1 for the passed in 'texts' from the request.
 message TranslateTextResponse {
     repeated Translation translations = 1;
 }
@@ -46,6 +57,8 @@ message AvailableLanguageRequest {
     string model = 1;
 }
 
+// Language pairs are the sets of src to tgt languages available per model.
+// languages containsall the model_name -> Language pair
 message AvailableLanguageResponse {
      message LanguagePair {
         repeated string src_lang = 1;
