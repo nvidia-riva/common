@@ -28,7 +28,7 @@ rpc TranslateText(TranslateTextRequest) returns (TranslateTextResponse) {}
 }
 
 // request for synchronous translation of each text in texts.
-// Available languages can be queries using ListSupportLanguagePairs RPC.
+// Available languages can be queried using ListSupportLanguagePairs RPC.
 // source and target languages must be specified, are currently two character ISO codes, this will likely change to BCP-47 inline with other Riva Services for GA.
 //
 message TranslateTextRequest {
@@ -50,15 +50,15 @@ message TranslateTextResponse {
     repeated Translation translations = 1;
 }
 
-// by default returns all available languages.
-// can specificy an individual model as well.
+// Returns a map of model names to its source and target language pairs.
+// Can specificy a specific model name to retrieve only its language pairs.
 message AvailableLanguageRequest {
     // If empty returns all available languages.
     string model = 1;
 }
 
 // Language pairs are the sets of src to tgt languages available per model.
-// languages containsall the model_name -> Language pair
+// languages contains all the model_name -> Language pair
 message AvailableLanguageResponse {
      message LanguagePair {
         repeated string src_lang = 1;
