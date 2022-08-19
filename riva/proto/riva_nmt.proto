@@ -19,7 +19,7 @@ option go_package = "nvidia.com/riva_speech";
  */
 service RivaTranslation {
 
-  // Translate text to text, from a source to a target language.  Currently source language is required, along with the model name.
+  // Translate text to text, from a source to a target language.  Currently source and target language fields is required, along with the model name.
   // Multiple texts may be passed per request up to the given batch size for the model, which is set at translation pipeline creation time.
 rpc TranslateText(TranslateTextRequest) returns (TranslateTextResponse) {}
 
@@ -39,7 +39,7 @@ message TranslateTextRequest {
 }
 
 // contains a single translation, collecting into the translate text response
-// Includes the language code, since with multi lingual models there are multiple possibilities.
+// Includes the target language code, since with multi lingual models there are multiple possibilities.
 message Translation {
     string text = 1;
     string language = 2;
