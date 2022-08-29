@@ -89,9 +89,9 @@ message RecognitionConfig {
     int32 sample_rate_hertz = 2;
 
     // Required. The language of the supplied audio as a
-  	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-  	// Example: "en-US".
-		// Currently only en-US is supported
+    // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+    // Example: "en-US".
+    // Currently only en-US is supported
     string language_code = 3;
 
     // Maximum number of recognition hypotheses to be returned.
@@ -112,39 +112,39 @@ message RecognitionConfig {
     // information, see SpeechContext section
     repeated SpeechContext speech_contexts = 6; 
 
-  	// The number of channels in the input audio data.
-  	// ONLY set this for MULTI-CHANNEL recognition.
-  	// Valid values for LINEAR16 and FLAC are `1`-`8`.
-  	// Valid values for OGG_OPUS are '1'-'254'.
-  	// Valid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only `1`.
-  	// If `0` or omitted, defaults to one channel (mono).
-  	// Note: We only recognize the first channel by default.
-  	// To perform independent recognition on each channel set
-  	// `enable_separate_recognition_per_channel` to 'true'.
-  	int32 audio_channel_count = 7;
+    // The number of channels in the input audio data.
+    // ONLY set this for MULTI-CHANNEL recognition.
+    // Valid values for LINEAR16 and FLAC are `1`-`8`.
+    // Valid values for OGG_OPUS are '1'-'254'.
+    // Valid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only `1`.
+    // If `0` or omitted, defaults to one channel (mono).
+    // Note: We only recognize the first channel by default.
+    // To perform independent recognition on each channel set
+    // `enable_separate_recognition_per_channel` to 'true'.
+    int32 audio_channel_count = 7;
 
- 	// If `true`, the top result includes a list of words and
-  	// the start and end time offsets (timestamps) for those words. If
-  	// `false`, no word-level time offset information is returned. The default is
-  	// `false`.
+    // If `true`, the top result includes a list of words and the start and end
+    // time offsets (timestamps), and confidence scores for those words. If
+    // `false`, no word-level time offset information is returned. The default
+    // is `false`.
     bool enable_word_time_offsets = 8;
 
-		// If 'true', adds punctuation to recognition result hypotheses.
-  	// The default 'false' value does not add punctuation to result hypotheses.
-  	bool enable_automatic_punctuation = 11;
+    // If 'true', adds punctuation to recognition result hypotheses. The
+    // default 'false' value does not add punctuation to result hypotheses.
+    bool enable_automatic_punctuation = 11;
 
-  	// This needs to be set to `true` explicitly and `audio_channel_count` > 1
-  	// to get each channel recognized separately. The recognition result will
-  	// contain a `channel_tag` field to state which channel that result belongs
-  	// to. If this is not true, we will only recognize the first channel. The
-  	// request is billed cumulatively for all channels recognized:
-  	// `audio_channel_count` multiplied by the length of the audio.
-  	bool enable_separate_recognition_per_channel = 12;
+    // This needs to be set to `true` explicitly and `audio_channel_count` > 1
+    // to get each channel recognized separately. The recognition result will
+    // contain a `channel_tag` field to state which channel that result belongs
+    // to. If this is not true, we will only recognize the first channel. The
+    // request is billed cumulatively for all channels recognized:
+    // `audio_channel_count` multiplied by the length of the audio.
+    bool enable_separate_recognition_per_channel = 12;
 
     // Which model to select for the given request.
     // If empty, Riva will select the right model based on the other RecognitionConfig parameters.
     // The model should correspond to the name passed to `riva-build` with the `--name` argument
-  	string model = 13;
+    string model = 13;
 
     // The verbatim_transcripts flag enables or disable inverse text normalization.
     // 'true' returns exactly what was said, with no denormalization.
@@ -224,12 +224,14 @@ message SpeechRecognitionAlternative {
   // Transcript text representing the words that the user spoke.
   string transcript = 1;
 
-  // The non-normalized confidence estimate. A higher number indicates an
-  // estimated greater likelihood that the recognized words are correct. This
-  // field is set only for a non-streaming result or, for a streaming result
-  // where is_final=true. This field is not guaranteed to be accurate and users
-  // should not rely on it to be always provided. The default of 0.0 is a
-  // sentinel value indicating confidence was not set.
+  // The confidence estimate. A higher number indicates an estimated greater
+  // likelihood that the recognized word is correct. This field is set only for
+  // a non-streaming result or, for a streaming result where is_final=true.
+  // This field is not guaranteed to be accurate and users should not rely on
+  // it to be always provided. Although confidence can currently be roughly
+  // interpreted as a natural-log probability, the estimate computation varies
+  // with difference configurations, and is subject to change. The default of
+  // 0.0 is a sentinel value indicating confidence was not set.
   float confidence = 2;
 
   // A list of word-specific information for each recognized word. Only populated
@@ -254,12 +256,14 @@ message WordInfo {
   // The word corresponding to this set of information.
   string word = 3;
 
-  // The confidence estimate between 0.0 and 1.0. A higher number indicates an
-  // estimated greater likelihood that the recognized words are correct. This
-  // field is set only for a non-streaming result or, for a streaming result
-  // where is_final=true. This field is not guaranteed to be accurate and users
-  // should not rely on it to be always provided. The default of 0.0 is a
-  // sentinel value indicating confidence was not set.
+  // The confidence estimate. A higher number indicates an estimated greater
+  // likelihood that the recognized word is correct. This field is set only for
+  // a non-streaming result or, for a streaming result where is_final=true.
+  // This field is not guaranteed to be accurate and users should not rely on
+  // it to be always provided. Although confidence can currently be roughly
+  // interpreted as a natural-log probability, the estimate computation varies
+  // with difference configurations, and is subject to change. The default of
+  // 0.0 is a sentinel value indicating confidence was not set.
   float confidence = 4;
 }
 
