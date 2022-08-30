@@ -141,7 +141,9 @@ message RecognitionConfig {
   	// `audio_channel_count` multiplied by the length of the audio.
   	bool enable_separate_recognition_per_channel = 12;
 
-		// Which model to select for the given request. Valid choices: Jasper, Quartznet
+    // Which model to select for the given request.
+    // If empty, Riva will select the right model based on the other RecognitionConfig parameters.
+    // The model should correspond to the name passed to `riva-build` with the `--name` argument
   	string model = 13;
 
     // The verbatim_transcripts flag enables or disable inverse text normalization.
