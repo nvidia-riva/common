@@ -125,12 +125,12 @@ message RecognitionConfig {
     // If set to 'true', the server filters out profanities, replacing all but the initial
     // character in each filtered word with asterisks. For example, "x**".
     // If set to `false` or omitted, profanities will not be filtered out. The default is `false`.
-    bool profanity_filter=5; 
+    bool profanity_filter=5;
 
     // Array of SpeechContext.
     // A means to provide context to assist the speech recognition. For more
     // information, see SpeechContext section
-    repeated SpeechContext speech_contexts = 6; 
+    repeated SpeechContext speech_contexts = 6;
 
   	// The number of channels in the input audio data.
   	// ONLY set this for MULTI-CHANNEL recognition.
@@ -203,15 +203,10 @@ message SpeakerDiarizationConfig {
   // in the WordInfo.
   bool enable_speaker_diarization = 1;
 
-  // Minimum number of speakers in the conversation. This range gives you more
-  // flexibility by allowing the system to automatically determine the correct
-  // number of speakers. If not set, the default value is 2.
-  int32 min_speaker_count = 2;
-
-  // Maximum number of speakers in the conversation. This range gives you more
-  // flexibility by allowing the system to automatically determine the correct
-  // number of speakers. If not set, the default value is 6.
-  int32 max_speaker_count = 3;
+  // Maximum number of speakers in the conversation. This gives flexibility by
+  // allowing the system to automatically determine the correct number of speakers.
+  // If not set, the default value is 8.
+  int32 max_speaker_count = 2;
 }
 
 // Provides "hints" to the speech recognizer to favor specific words and phrases
@@ -222,7 +217,7 @@ message SpeechContext {
   // the speech recognition is more likely to recognize them. This can be used
   // to improve the accuracy for specific words and phrases, for example, if
   // specific commands are typically spoken by the user. This can also be used
-  // to add additional words to the vocabulary of the recognizer. 
+  // to add additional words to the vocabulary of the recognizer.
   repeated string phrases = 1;
 
   // Hint Boost. Positive value will increase the probability that a specific
@@ -314,9 +309,9 @@ message WordInfo {
 
 // `StreamingRecognizeResponse` is the only message returned to the client by
 // `StreamingRecognize`. A series of zero or more `StreamingRecognizeResponse`
-// messages are streamed back to the client. 
+// messages are streamed back to the client.
 //
-// Here are few examples of `StreamingRecognizeResponse`s 
+// Here are few examples of `StreamingRecognizeResponse`s
 //
 // 1. results { alternatives { transcript: "tube" } stability: 0.01 }
 //
@@ -332,8 +327,8 @@ message StreamingRecognizeResponse {
 
     // This repeated list contains the latest transcript(s) corresponding to
     // audio currently being processed.
-		// Currently one result is returned, where each result can have multiple 
-		// alternatives
+    // Currently one result is returned, where each result can have multiple
+    // alternatives
     repeated StreamingRecognitionResult results = 1;
 }
 
