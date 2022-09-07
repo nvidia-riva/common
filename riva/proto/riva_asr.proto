@@ -91,7 +91,6 @@ message RecognitionConfig {
     // Required. The language of the supplied audio as a
   	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
   	// Example: "en-US".
-		// Currently only en-US is supported
     string language_code = 3;
 
     // Maximum number of recognition hypotheses to be returned.
