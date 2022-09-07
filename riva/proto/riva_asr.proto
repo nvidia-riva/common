@@ -140,7 +140,9 @@ message RecognitionConfig {
   	// `audio_channel_count` multiplied by the length of the audio.
   	bool enable_separate_recognition_per_channel = 12;
 
-		// Which model to select for the given request. Valid choices: Jasper, Quartznet
+    // Which model to select for the given request.
+    // If empty, Riva will select the right model based on the other RecognitionConfig parameters.
+    // The model should correspond to the name passed to `riva-build` with the `--name` argument
   	string model = 13;
 
     // The verbatim_transcripts flag enables or disable inverse text normalization.
@@ -221,12 +223,12 @@ message SpeechRecognitionAlternative {
   // Transcript text representing the words that the user spoke.
   string transcript = 1;
 
-  // The non-normalized confidence estimate. A higher number
-  // indicates an estimated greater likelihood that the recognized words are
-  // correct. This field is set only for a non-streaming
-  // result or, of a streaming result where `is_final=true`.
-  // This field is not guaranteed to be accurate and users should not rely on it
-  // to be always provided.
+  // The non-normalized confidence estimate. A higher number indicates an
+  // estimated greater likelihood that the recognized words are correct. This
+  // field is set only for a non-streaming result or, for a streaming result
+  // where is_final=true. This field is not guaranteed to be accurate and users
+  // should not rely on it to be always provided. The default of 0.0 is a
+  // sentinel value indicating confidence was not set.
   float confidence = 2;
 
   // A list of word-specific information for each recognized word. Only populated
@@ -250,8 +252,15 @@ message WordInfo {
 
   // The word corresponding to this set of information.
   string word = 3;
-}
 
+  // The confidence estimate between 0.0 and 1.0. A higher number indicates an
+  // estimated greater likelihood that the recognized words are correct. This
+  // field is set only for a non-streaming result or, for a streaming result
+  // where is_final=true. This field is not guaranteed to be accurate and users
+  // should not rely on it to be always provided. The default of 0.0 is a
+  // sentinel value indicating confidence was not set.
+  float confidence = 4;
+}
 
 // `StreamingRecognizeResponse` is the only message returned to the client by
 // `StreamingRecognize`. A series of zero or more `StreamingRecognizeResponse`
