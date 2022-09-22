@@ -56,6 +56,24 @@ service RivaLanguageUnderstanding {
   // NaturalQuery is a search function that enables querying one or more documents
   // or contexts with a query that is written in natural language.
   rpc NaturalQuery(NaturalQueryRequest) returns (NaturalQueryResponse) {}
+
+  //Enables clients to request the configuration of the current ASR service, or a specific model within the service.
+  rpc GetRivaNLPConfig(RivaNLPConfigRequest) returns (RivaNLPConfigResponse) {}
+
+}
+
+message RivaNLPConfigRequest {
+   //If model is specified only return config for model, otherwise return all configs.
+   string model_name = 1;
+}
+
+message RivaNLPConfigResponse {
+    message Config {
+       string model_name = 1;
+       map<string,string> parameters = 2;
+    }
+
+    repeated Config model_config = 1;
 }
 
 // NLPModelParams is a metadata message that is included in every request message
