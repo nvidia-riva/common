@@ -37,8 +37,29 @@ service RivaSpeechRecognition {
     // intermediate results can be sent back to the client. Recognition ends when the stream is closed
     // by the client.
     rpc StreamingRecognize(stream StreamingRecognizeRequest) returns (stream StreamingRecognizeResponse) {}
+
+
+    //Enables clients to request the configuration of the current ASR service, or a specific model within the service.
+    rpc GetRivaSpeechRecognitionConfig(RivaSpeechRecognitionConfigRequest) returns (RivaSpeechRecognitionConfigResponse) {}
 }
 
+/*
+* RivaSpeechRecognitionConfigRequest
+*/
+
+message RivaSpeechRecognitionConfigRequest {
+   //If model is specified only return config for model, otherwise return all configs.
+   string model_name = 1;
+}
+
+message RivaSpeechRecognitionConfigResponse {
+    message Config {
+       string model_name = 1;
+       map<string,string> parameters = 2;
+    }
+
+    repeated Config model_config = 1;
+}
 
 /*
  * RecognizeRequest is used for batch processing of a single audio recording.
