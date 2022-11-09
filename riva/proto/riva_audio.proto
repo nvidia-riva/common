@@ -31,4 +31,8 @@ enum AudioEncoding {
 
     // 8-bit samples that compand 13-bit audio samples using G.711 PCMU/a-law.
     ALAW = 20;
+
+    //OggOpus samples, can be 8, 16, 32 bits
+    OGG_OPUS;
+    
 }
