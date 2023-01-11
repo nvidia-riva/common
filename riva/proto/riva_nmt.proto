@@ -33,18 +33,8 @@ service RivaTranslation {
   rpc StreamingTranslateSpeechToText(stream StreamingTranslateSpeechToTextRequest)
         returns (stream StreamingTranslateSpeechToTextResponse) {}
 
-  //offline speech to text translation api.
-  //rpc TranslateSpeechToText(TranslateSpeechToTextRequest) returns (TranslateSpeechToTextResponse) {}
-
-  //Returns the parameters for the configurated pipelines.
-  //rpc GetTranslateSpeechToTextConfig(GetTranslateSpeechToTextConfigRequest) returns (GetTranslateSpeechToTextConfigResponse) {}
-
   rpc StreamingTranslateSpeechToSpeech(stream StreamingTranslateSpeechToSpeechRequest)
     returns (stream StreamingTranslateSpeechToSpeechResponse) {}
-
-  //offline speech to text translation api.
-  //rpc TranslateSpeechToSpeech(TranslateSpeechToSpeechRequest) returns (TranslateSpeechToSpeechResponse) {}
-
 
 }
 
@@ -53,10 +43,8 @@ service RivaTranslation {
 */
 message StreamingTranslateSpeechToSpeechConfig {
    nvidia.riva.asr.StreamingRecognitionConfig asrConfig = 1;  //from riva_asr.proto
-   SynthesizeSpeechConfig ttsConfig = 2; //from riva_tts.proto
-   string source_language_code = 3;
-   string target_language_code = 4;
-   AudioEncoding t = 5;
+   SynthesizeSpeechConfig ttsConfig = 2;
+   TranslationConfig translationConfig = 3;
 }
 
 /*
@@ -71,10 +59,18 @@ message StreamingTranslateSpeechToSpeechRequest {
    }
 }
 
+message TranslationConfig {
+   //BCP-47 "en-US"
+   string source_language_code = 1;
+   string target_language_code = 2;
+   string model_name = 3;
+}
+
 message SynthesizeSpeechConfig {
         AudioEncoding encoding = 1;
         int32 sample_rate_hz = 2;
         string voice_name = 3;
+        string language_code = 4;
 }
 
 /*
@@ -97,12 +93,8 @@ message StreamingTranslateSpeechToTextResponse {
 }
 
 message StreamingTranslateSpeechToTextConfig {
-   nvidia.riva.asr.StreamingRecognitionConfig config = 1; //existing ASR config
-   bool interim_results = 2;  // not always supported
-   //BCP-47 "en-US"
-   string source_language_code = 3;
-   string target_language_code = 4;
-
+   nvidia.riva.asr.StreamingRecognitionConfig asrConfig = 1; //existing ASR config
+   TranslationConfig translationConfig;
 }
 
 
