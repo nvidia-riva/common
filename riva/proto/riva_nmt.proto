@@ -42,9 +42,9 @@ service RivaTranslation {
 * Configuration for Translate S2S.  reuse existing protos from other services.
 */
 message StreamingTranslateSpeechToSpeechConfig {
-   nvidia.riva.asr.StreamingRecognitionConfig asrConfig = 1;  //from riva_asr.proto
-   SynthesizeSpeechConfig ttsConfig = 2;
-   TranslationConfig translationConfig = 3;
+   nvidia.riva.asr.StreamingRecognitionConfig asr_config = 1;  //from riva_asr.proto
+   SynthesizeSpeechConfig tts_config = 2;
+   TranslationConfig translation_config = 3;
 }
 
 /*
@@ -93,8 +93,8 @@ message StreamingTranslateSpeechToTextResponse {
 }
 
 message StreamingTranslateSpeechToTextConfig {
-   nvidia.riva.asr.StreamingRecognitionConfig asrConfig = 1; //existing ASR config
-   TranslationConfig translationConfig = 2;
+   nvidia.riva.asr.StreamingRecognitionConfig asr_config = 1; //existing ASR config
+   TranslationConfig translation_config = 2;
 }
 
 
