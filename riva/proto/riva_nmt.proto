@@ -94,7 +94,7 @@ message StreamingTranslateSpeechToTextResponse {
 
 message StreamingTranslateSpeechToTextConfig {
    nvidia.riva.asr.StreamingRecognitionConfig asrConfig = 1; //existing ASR config
-   TranslationConfig translationConfig;
+   TranslationConfig translationConfig = 2;
 }
 
 
