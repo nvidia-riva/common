@@ -12,6 +12,9 @@ package nvidia.riva.nmt;
 
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
+import "riva/proto/riva_audio.proto";
+import "riva/proto/riva_asr.proto";
+import "riva/proto/riva_tts.proto";
 
 /*
  *  RivaTranslation service provides rpcs to translate between languages.
@@ -21,11 +24,79 @@ service RivaTranslation {
 
   // Translate text to text, from a source to a target language.  Currently source and target language fields is required, along with the model name.
   // Multiple texts may be passed per request up to the given batch size for the model, which is set at translation pipeline creation time.
-rpc TranslateText(TranslateTextRequest) returns (TranslateTextResponse) {}
+  rpc TranslateText(TranslateTextRequest) returns (TranslateTextResponse) {}
 
   // Lists the available language pairs and models names to be used for TranslateText
   rpc ListSupportedLanguagePairs(AvailableLanguageRequest) returns (AvailableLanguageResponse) {}
+
+  //streaming speech to text translation api.
+  rpc StreamingTranslateSpeechToText(stream StreamingTranslateSpeechToTextRequest)
+        returns (stream StreamingTranslateSpeechToTextResponse) {}
+
+  rpc StreamingTranslateSpeechToSpeech(stream StreamingTranslateSpeechToSpeechRequest)
+    returns (stream StreamingTranslateSpeechToSpeechResponse) {}
+
 }
+
+/*
+* Configuration for Translate S2S.  reuse existing protos from other services.
+*/
+message StreamingTranslateSpeechToSpeechConfig {
+   nvidia.riva.asr.StreamingRecognitionConfig asr_config = 1;  //from riva_asr.proto
+   SynthesizeSpeechConfig tts_config = 2;
+   TranslationConfig translation_config = 3;
+}
+
+/*
+* Streaming translate speech to speech used to configure the entire pipline for speech translation.  This can be
+* be backed by a cascade of ASR, NMT, TTS models or an end to end model
+*
+*/
+message StreamingTranslateSpeechToSpeechRequest {
+   oneof streaming_request {
+       StreamingTranslateSpeechToSpeechConfig config = 1;
+       bytes audio_content = 2;
+   }
+}
+
+message TranslationConfig {
+   //BCP-47 "en-US"
+   string source_language_code = 1;
+   string target_language_code = 2;
+   string model_name = 3;
+}
+
+message SynthesizeSpeechConfig {
+        AudioEncoding encoding = 1;
+        int32 sample_rate_hz = 2;
+        string voice_name = 3;
+        string language_code = 4;
+}
+
+/*
+*
+*/
+message StreamingTranslateSpeechToSpeechResponse {
+        nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
+}
+
+message StreamingTranslateSpeechToTextRequest {
+  oneof streaming_request {
+     StreamingTranslateSpeechToTextConfig config = 1;
+     bytes audio_content = 2;
+  }
+}
+
+message StreamingTranslateSpeechToTextResponse {
+
+   repeated nvidia.riva.asr.StreamingRecognitionResult results = 1; //from riva_asr.proto
+}
+
+message StreamingTranslateSpeechToTextConfig {
+   nvidia.riva.asr.StreamingRecognitionConfig asr_config = 1; //existing ASR config
+   TranslationConfig translation_config = 2;
+}
+
 
 // request for synchronous translation of each text in texts.
 // Available languages can be queried using ListSupportLanguagePairs RPC.
