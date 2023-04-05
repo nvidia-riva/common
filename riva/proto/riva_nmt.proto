@@ -76,11 +76,12 @@ message SynthesizeSpeechConfig {
 /*
 *
 */
-
+//contains either the tts data or the is_final flag marking end of tts stream
+//is_final is set after every translated sentence.
 message StreamingTranslateSpeechToSpeechResponse {
     oneof streaming_response {
         nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
-        bool is_final=2; //end of tts stream
+        bool is_final = 2; //end of tts stream
     }
 }
 
