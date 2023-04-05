@@ -76,8 +76,10 @@ message SynthesizeSpeechConfig {
 /*
 *
 */
+
 message StreamingTranslateSpeechToSpeechResponse {
         nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
+        bool is_final=2; //end of tts stream
 }
 
 message StreamingTranslateSpeechToTextRequest {
