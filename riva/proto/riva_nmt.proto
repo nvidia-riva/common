@@ -77,6 +77,7 @@ message SynthesizeSpeechConfig {
 *
 */
 message StreamingTranslateSpeechToSpeechResponse {
+        // Contains speech responses, the last response sends an empty buffer to mark the end of stream.
         nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
 }
 
