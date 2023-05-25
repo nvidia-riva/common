@@ -110,8 +110,8 @@ message RecognitionConfig {
     int32 sample_rate_hertz = 2;
 
     // Required. The language of the supplied audio as a
-  	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-  	// Example: "en-US".
+    // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+    // Example: "en-US".
     string language_code = 3;
 
     // Maximum number of recognition hypotheses to be returned.
@@ -186,10 +186,10 @@ message RecognitionConfig {
 
 // Provides information to the recognizer that specifies how to process the request
 message StreamingRecognitionConfig {
-		// Provides information to the recognizer that specifies how to process the request
+    // Provides information to the recognizer that specifies how to process the request
     RecognitionConfig config = 1;
 
- 		// If `true`, interim results (tentative hypotheses) may be
+    // If `true`, interim results (tentative hypotheses) may be
     // returned as they become available (these interim results are indicated with
     // the `is_final=false` flag).
     // If `false` or omitted, only `is_final=true` result(s) are returned.
@@ -234,7 +234,7 @@ message SpeechContext {
 // messages.
 message RecognizeResponse {
     // Sequential list of transcription results corresponding to
-  	// sequential portions of audio. Currently only returns one transcript.
+    // sequential portions of audio. Currently only returns one transcript.
     repeated SpeechRecognitionResult results = 1;
 }
 
