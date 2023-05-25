@@ -37,8 +37,29 @@ service RivaSpeechRecognition {
     // intermediate results can be sent back to the client. Recognition ends when the stream is closed
     // by the client.
     rpc StreamingRecognize(stream StreamingRecognizeRequest) returns (stream StreamingRecognizeResponse) {}
+
+
+    //Enables clients to request the configuration of the current ASR service, or a specific model within the service.
+    rpc GetRivaSpeechRecognitionConfig(RivaSpeechRecognitionConfigRequest) returns (RivaSpeechRecognitionConfigResponse) {}
 }
 
+/*
+* RivaSpeechRecognitionConfigRequest
+*/
+
+message RivaSpeechRecognitionConfigRequest {
+   //If model is specified only return config for model, otherwise return all configs.
+   string model_name = 1;
+}
+
+message RivaSpeechRecognitionConfigResponse {
+    message Config {
+       string model_name = 1;
+       map<string,string> parameters = 2;
+    }
+
+    repeated Config model_config = 1;
+}
 
 /*
  * RecognizeRequest is used for batch processing of a single audio recording.
@@ -89,9 +110,8 @@ message RecognitionConfig {
     int32 sample_rate_hertz = 2;
 
     // Required. The language of the supplied audio as a
-    // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-    // Example: "en-US".
-    // Currently only en-US is supported
+  	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+  	// Example: "en-US".
     string language_code = 3;
 
     // Maximum number of recognition hypotheses to be returned.
@@ -105,12 +125,12 @@ message RecognitionConfig {
     // If set to 'true', the server filters out profanities, replacing all but the initial
     // character in each filtered word with asterisks. For example, "x**".
     // If set to `false` or omitted, profanities will not be filtered out. The default is `false`.
-    bool profanity_filter=5; 
+    bool profanity_filter=5;
 
     // Array of SpeechContext.
     // A means to provide context to assist the speech recognition. For more
     // information, see SpeechContext section
-    repeated SpeechContext speech_contexts = 6; 
+    repeated SpeechContext speech_contexts = 6;
 
     // The number of channels in the input audio data.
     // ONLY set this for MULTI-CHANNEL recognition.
@@ -151,6 +171,11 @@ message RecognitionConfig {
     // 'false' applies inverse text normalization, also this is the default
     bool verbatim_transcripts = 14;
 
+    // Config to enable speaker diarization and set additional
+    // parameters. For non-streaming requests, the diarization results will be provided only
+    // in the top alternative of the FINAL SpeechRecognitionResult.
+    SpeakerDiarizationConfig diarization_config = 19;
+
     // Custom fields for passing request-level
     // configuration options to plugins used in the
     // model pipeline.
@@ -171,6 +196,18 @@ message StreamingRecognitionConfig {
     bool interim_results = 2;
 }
 
+// Config to enable speaker diarization.
+message SpeakerDiarizationConfig {
+  // If 'true', enables speaker detection for each recognized word in
+  // the top alternative of the recognition result using a speaker_tag provided
+  // in the WordInfo.
+  bool enable_speaker_diarization = 1;
+
+  // Maximum number of speakers in the conversation. This gives flexibility by
+  // allowing the system to automatically determine the correct number of speakers.
+  // If not set, the default value is 8.
+  int32 max_speaker_count = 2;
+}
 
 // Provides "hints" to the speech recognizer to favor specific words and phrases
 // in the results.
@@ -180,7 +217,7 @@ message SpeechContext {
   // the speech recognition is more likely to recognize them. This can be used
   // to improve the accuracy for specific words and phrases, for example, if
   // specific commands are typically spoken by the user. This can also be used
-  // to add additional words to the vocabulary of the recognizer. 
+  // to add additional words to the vocabulary of the recognizer.
   repeated string phrases = 1;
 
   // Hint Boost. Positive value will increase the probability that a specific
@@ -265,13 +302,20 @@ message WordInfo {
   // with difference configurations, and is subject to change. The default of
   // 0.0 is a sentinel value indicating confidence was not set.
   float confidence = 4;
+
+  // Output only. A distinct integer value is assigned for every speaker within
+  // the audio. This field specifies which one of those speakers was detected to
+  // have spoken this word. Value ranges from '1' to diarization_speaker_count.
+  // speaker_tag is set if enable_speaker_diarization = 'true' and only in the
+  // top alternative.
+  int32 speaker_tag = 5;
 }
 
 // `StreamingRecognizeResponse` is the only message returned to the client by
 // `StreamingRecognize`. A series of zero or more `StreamingRecognizeResponse`
-// messages are streamed back to the client. 
+// messages are streamed back to the client.
 //
-// Here are few examples of `StreamingRecognizeResponse`s 
+// Here are few examples of `StreamingRecognizeResponse`s
 //
 // 1. results { alternatives { transcript: "tube" } stability: 0.01 }
 //
@@ -287,8 +331,8 @@ message StreamingRecognizeResponse {
 
     // This repeated list contains the latest transcript(s) corresponding to
     // audio currently being processed.
-		// Currently one result is returned, where each result can have multiple 
-		// alternatives
+    // Currently one result is returned, where each result can have multiple
+    // alternatives
     repeated StreamingRecognitionResult results = 1;
 }
 

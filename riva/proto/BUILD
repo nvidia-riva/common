@@ -36,6 +36,16 @@ cc_grpc_library(
     srcs = [":riva_nlp.proto"],
     deps = []
 )
+cc_grpc_library(
+    name = "riva_grpc_nmt",
+    srcs = [":riva_nmt.proto"],
+    deps = [
+         ":riva_audio_proto",
+         ":riva_grpc_tts",
+         ":riva_grpc_asr",
+         ]
+)
+
 
 cc_grpc_library(
     name = "riva_grpc_health",
