@@ -43,7 +43,7 @@ message SynthesizeSpeechRequest {
     string language_code = 2;
     // audio encoding params
     AudioEncoding encoding = 3;
- 
+
     //  The sample rate in hertz (Hz) of the audio output requested through `SynthesizeSpeechRequest` messages.
     //  Models produce an output at a fixed rate. The sample rate enables you to resample the generated audio output if required.
     //  You use the sample rate to up-sample or down-sample the audio for various scenarios. For example, the sample rate can be set to 8kHz (kilohertz) if the output
@@ -70,6 +70,10 @@ message SynthesizeSpeechResponseMetadata {
 message SynthesizeSpeechResponse {
     bytes audio = 1;
     SynthesizeSpeechResponseMetadata meta = 2;
+
+    // The ID associated with the request. This is a UUID specific only to
+    // the given request.
+    string request_id = 3;
 }
 
 /*

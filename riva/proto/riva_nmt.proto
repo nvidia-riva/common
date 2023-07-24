@@ -77,8 +77,12 @@ message SynthesizeSpeechConfig {
 *
 */
 message StreamingTranslateSpeechToSpeechResponse {
-        // Contains speech responses, the last response sends an empty buffer to mark the end of stream.
-        nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
+    // Contains speech responses, the last response sends an empty buffer to mark the end of stream.
+    nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
+
+    // The ID associated with the request. This is a UUID specific only to
+    // the given request.
+    string request_id = 2;
 }
 
 message StreamingTranslateSpeechToTextRequest {
@@ -90,7 +94,11 @@ message StreamingTranslateSpeechToTextRequest {
 
 message StreamingTranslateSpeechToTextResponse {
 
-   repeated nvidia.riva.asr.StreamingRecognitionResult results = 1; //from riva_asr.proto
+    repeated nvidia.riva.asr.StreamingRecognitionResult results = 1; //from riva_asr.proto
+
+    // The ID associated with the request. This is a UUID specific only to
+    // the given request.
+    string request_id = 2;
 }
 
 message StreamingTranslateSpeechToTextConfig {
@@ -120,6 +128,10 @@ message Translation {
 // Translations are returned as text:language pairs.  These are 1:1 for the passed in 'texts' from the request.
 message TranslateTextResponse {
     repeated Translation translations = 1;
+
+    // The ID associated with the request. This is a UUID specific only to
+    // the given request.
+    string request_id = 2;
 }
 
 // Returns a map of model names to its source and target language pairs.

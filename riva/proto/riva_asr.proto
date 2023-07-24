@@ -236,6 +236,10 @@ message RecognizeResponse {
     // Sequential list of transcription results corresponding to
     // sequential portions of audio. Currently only returns one transcript.
     repeated SpeechRecognitionResult results = 1;
+
+    // The ID associated with the request. This is a UUID specific only to
+    // the given request.
+    string request_id = 2;
 }
 
 // A speech recognition result corresponding to the latest transcript
@@ -334,6 +338,10 @@ message StreamingRecognizeResponse {
     // Currently one result is returned, where each result can have multiple
     // alternatives
     repeated StreamingRecognitionResult results = 1;
+
+    // The ID associated with the request. This is a UUID specific only to
+    // the given request.
+    string request_id = 2;
 }
 
 // A streaming speech recognition result corresponding to a portion of the audio
