@@ -54,6 +54,9 @@ message SynthesizeSpeechRequest {
     int32 sample_rate_hz = 4;
     // voice params
     string voice_name = 5;
+
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    string request_id = 6;
 }
 
 message SynthesizeSpeechResponseMetadata {

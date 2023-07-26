@@ -70,6 +70,8 @@ message RecognizeRequest {
     // The raw audio data to be processed. The audio bytes must be encoded as specified in
     // `RecognitionConfig`.
     bytes audio = 2;
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    string request_id = 3;
 }
 
 
@@ -94,6 +96,8 @@ message StreamingRecognizeRequest {
         // `RecognitionConfig`.
         bytes audio_content = 2;
     }
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding responses.
+    string request_id = 3;
 }
 
 // Provides information to the recognizer that specifies how to process the request

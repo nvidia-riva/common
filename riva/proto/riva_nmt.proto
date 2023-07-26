@@ -53,10 +53,12 @@ message StreamingTranslateSpeechToSpeechConfig {
 *
 */
 message StreamingTranslateSpeechToSpeechRequest {
-   oneof streaming_request {
-       StreamingTranslateSpeechToSpeechConfig config = 1;
-       bytes audio_content = 2;
-   }
+    oneof streaming_request {
+        StreamingTranslateSpeechToSpeechConfig config = 1;
+        bytes audio_content = 2;
+    }
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    string request_id = 3;
 }
 
 message TranslationConfig {
@@ -86,10 +88,12 @@ message StreamingTranslateSpeechToSpeechResponse {
 }
 
 message StreamingTranslateSpeechToTextRequest {
-  oneof streaming_request {
-     StreamingTranslateSpeechToTextConfig config = 1;
-     bytes audio_content = 2;
-  }
+    oneof streaming_request {
+        StreamingTranslateSpeechToTextConfig config = 1;
+        bytes audio_content = 2;
+    }
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    string request_id = 3;
 }
 
 message StreamingTranslateSpeechToTextResponse {
@@ -116,6 +120,8 @@ message TranslateTextRequest {
     string model = 2;
     string source_language = 3;
     string target_language = 4;
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    string request_id = 3;
 }
 
 // contains a single translation, collecting into the translate text response
