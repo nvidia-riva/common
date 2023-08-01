@@ -141,7 +141,7 @@ message RecognitionConfig {
     // Note: We only recognize the first channel by default.
     // To perform independent recognition on each channel set
     // `enable_separate_recognition_per_channel` to 'true'.
-    // Note: Only single channel files are supported.
+    // Note: Only single channel audio input is supported as of now.
     int32 audio_channel_count = 7;
 
     // If `true`, the top result includes a list of words and the start and end
