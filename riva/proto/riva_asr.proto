@@ -141,6 +141,7 @@ message RecognitionConfig {
     // Note: We only recognize the first channel by default.
     // To perform independent recognition on each channel set
     // `enable_separate_recognition_per_channel` to 'true'.
+    // Note: Only single channel audio input is supported as of now.
     int32 audio_channel_count = 7;
 
     // If `true`, the top result includes a list of words and the start and end
@@ -159,6 +160,7 @@ message RecognitionConfig {
     // to. If this is not true, we will only recognize the first channel. The
     // request is billed cumulatively for all channels recognized:
     // `audio_channel_count` multiplied by the length of the audio.
+    // Note: This field is not yet supported.
     bool enable_separate_recognition_per_channel = 12;
 
     // Which model to select for the given request.
