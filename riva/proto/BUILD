@@ -20,22 +20,31 @@ cc_grpc_library(
 )
 
 cc_grpc_library(
+    name = "riva_common_proto",
+    srcs = [
+        ":riva_common.proto"
+    ],
+    deps = [],
+)
+
+cc_grpc_library(
     name = "riva_grpc_asr",
     srcs = [":riva_asr.proto"],
-    deps = [":riva_audio_proto"],
+    deps = [":riva_audio_proto", ":riva_common_proto"],
 )
 
 cc_grpc_library(
     name = "riva_grpc_tts",
     srcs = [":riva_tts.proto"],
-    deps = [":riva_audio_proto"]
+    deps = [":riva_audio_proto", ":riva_common_proto"],
 )
 
 cc_grpc_library(
     name = "riva_grpc_nlp",
     srcs = [":riva_nlp.proto"],
-    deps = []
+    deps = [":riva_common_proto"],
 )
+
 cc_grpc_library(
     name = "riva_grpc_nmt",
     srcs = [":riva_nmt.proto"],

@@ -9,6 +9,7 @@ option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
 
 import "riva/proto/riva_audio.proto";
+import "riva/proto/riva_common.proto";
 
 service RivaSpeechSynthesis {
     // Used to request text-to-speech from the service. Submit a request containing the
@@ -56,7 +57,7 @@ message SynthesizeSpeechRequest {
     string voice_name = 5;
 
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 100;
+    RequestId id = 100;
 }
 
 message SynthesizeSpeechResponseMetadata {
@@ -75,7 +76,7 @@ message SynthesizeSpeechResponse {
     SynthesizeSpeechResponseMetadata meta = 2;
 
     // The ID associated with the request
-    string request_id = 100;
+    RequestId id = 100;
 }
 
 /*

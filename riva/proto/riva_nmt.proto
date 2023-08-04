@@ -12,6 +12,7 @@ package nvidia.riva.nmt;
 
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
+import "riva/proto/riva_common.proto";
 import "riva/proto/riva_audio.proto";
 import "riva/proto/riva_asr.proto";
 import "riva/proto/riva_tts.proto";
@@ -59,7 +60,7 @@ message StreamingTranslateSpeechToSpeechRequest {
     }
 
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 100;
+    RequestId id = 100;
 }
 
 message TranslationConfig {
@@ -84,7 +85,7 @@ message StreamingTranslateSpeechToSpeechResponse {
     nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
 
     // The ID associated with the request
-    string request_id = 100;
+    RequestId id = 100;
 }
 
 message StreamingTranslateSpeechToTextRequest {
@@ -94,7 +95,7 @@ message StreamingTranslateSpeechToTextRequest {
     }
 
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 100;
+    RequestId id = 100;
 }
 
 message StreamingTranslateSpeechToTextResponse {
@@ -102,7 +103,7 @@ message StreamingTranslateSpeechToTextResponse {
     repeated nvidia.riva.asr.StreamingRecognitionResult results = 1; //from riva_asr.proto
 
     // The ID associated with the request
-    string request_id = 100;
+    RequestId id = 100;
 }
 
 message StreamingTranslateSpeechToTextConfig {
@@ -122,7 +123,7 @@ message TranslateTextRequest {
     string target_language = 4;
 
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 100;
+    RequestId id = 100;
 }
 
 // contains a single translation, collecting into the translate text response
@@ -137,7 +138,7 @@ message TranslateTextResponse {
     repeated Translation translations = 1;
 
     // The ID associated with the request
-    string request_id = 100;
+    RequestId id = 100;
 }
 
 // Returns a map of model names to its source and target language pairs.
