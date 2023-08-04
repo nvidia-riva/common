@@ -70,8 +70,9 @@ message RecognizeRequest {
     // The raw audio data to be processed. The audio bytes must be encoded as specified in
     // `RecognitionConfig`.
     bytes audio = 2;
+
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 3;
+    string request_id = 100;
 }
 
 
@@ -96,8 +97,9 @@ message StreamingRecognizeRequest {
         // `RecognitionConfig`.
         bytes audio_content = 2;
     }
+
     // The ID to be associated with the request. If provided, this will be returned in the corresponding responses.
-    string request_id = 3;
+    string request_id = 100;
 }
 
 // Provides information to the recognizer that specifies how to process the request
@@ -241,9 +243,8 @@ message RecognizeResponse {
     // sequential portions of audio. Currently only returns one transcript.
     repeated SpeechRecognitionResult results = 1;
 
-    // The ID associated with the request. This is a UUID specific only to
-    // the given request.
-    string request_id = 2;
+    // The ID associated with the request
+    string request_id = 100;
 }
 
 // A speech recognition result corresponding to the latest transcript
@@ -343,9 +344,8 @@ message StreamingRecognizeResponse {
     // alternatives
     repeated StreamingRecognitionResult results = 1;
 
-    // The ID associated with the request. This is a UUID specific only to
-    // the given request.
-    string request_id = 2;
+    // The ID associated with the request
+    string request_id = 100;
 }
 
 // A streaming speech recognition result corresponding to a portion of the audio

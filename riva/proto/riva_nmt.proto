@@ -57,8 +57,9 @@ message StreamingTranslateSpeechToSpeechRequest {
         StreamingTranslateSpeechToSpeechConfig config = 1;
         bytes audio_content = 2;
     }
+
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 3;
+    string request_id = 100;
 }
 
 message TranslationConfig {
@@ -82,9 +83,8 @@ message StreamingTranslateSpeechToSpeechResponse {
     // Contains speech responses, the last response sends an empty buffer to mark the end of stream.
     nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
 
-    // The ID associated with the request. This is a UUID specific only to
-    // the given request.
-    string request_id = 2;
+    // The ID associated with the request
+    string request_id = 100;
 }
 
 message StreamingTranslateSpeechToTextRequest {
@@ -92,17 +92,17 @@ message StreamingTranslateSpeechToTextRequest {
         StreamingTranslateSpeechToTextConfig config = 1;
         bytes audio_content = 2;
     }
+
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 3;
+    string request_id = 100;
 }
 
 message StreamingTranslateSpeechToTextResponse {
 
     repeated nvidia.riva.asr.StreamingRecognitionResult results = 1; //from riva_asr.proto
 
-    // The ID associated with the request. This is a UUID specific only to
-    // the given request.
-    string request_id = 2;
+    // The ID associated with the request
+    string request_id = 100;
 }
 
 message StreamingTranslateSpeechToTextConfig {
@@ -120,8 +120,9 @@ message TranslateTextRequest {
     string model = 2;
     string source_language = 3;
     string target_language = 4;
+
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 3;
+    string request_id = 100;
 }
 
 // contains a single translation, collecting into the translate text response
@@ -135,9 +136,8 @@ message Translation {
 message TranslateTextResponse {
     repeated Translation translations = 1;
 
-    // The ID associated with the request. This is a UUID specific only to
-    // the given request.
-    string request_id = 2;
+    // The ID associated with the request
+    string request_id = 100;
 }
 
 // Returns a map of model names to its source and target language pairs.

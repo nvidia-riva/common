@@ -56,7 +56,7 @@ message SynthesizeSpeechRequest {
     string voice_name = 5;
 
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    string request_id = 6;
+    string request_id = 100;
 }
 
 message SynthesizeSpeechResponseMetadata {
@@ -74,9 +74,8 @@ message SynthesizeSpeechResponse {
     bytes audio = 1;
     SynthesizeSpeechResponseMetadata meta = 2;
 
-    // The ID associated with the request. This is a UUID specific only to
-    // the given request.
-    string request_id = 3;
+    // The ID associated with the request
+    string request_id = 100;
 }
 
 /*
