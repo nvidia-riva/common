@@ -24,6 +24,7 @@ option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
 
 import "riva/proto/riva_audio.proto";
+import "riva/proto/riva_common.proto";
 
 /*
  * The RivaSpeechRecognition service provides two mechanisms for converting speech to text.
@@ -70,6 +71,9 @@ message RecognizeRequest {
     // The raw audio data to be processed. The audio bytes must be encoded as specified in
     // `RecognitionConfig`.
     bytes audio = 2;
+
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    RequestId id = 100;
 }
 
 
@@ -94,6 +98,9 @@ message StreamingRecognizeRequest {
         // `RecognitionConfig`.
         bytes audio_content = 2;
     }
+
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding responses.
+    RequestId id = 100;
 }
 
 // Provides information to the recognizer that specifies how to process the request
@@ -238,6 +245,9 @@ message RecognizeResponse {
     // Sequential list of transcription results corresponding to
     // sequential portions of audio. Currently only returns one transcript.
     repeated SpeechRecognitionResult results = 1;
+
+    // The ID associated with the request
+    RequestId id = 100;
 }
 
 // A speech recognition result corresponding to the latest transcript
@@ -336,6 +346,9 @@ message StreamingRecognizeResponse {
     // Currently one result is returned, where each result can have multiple
     // alternatives
     repeated StreamingRecognitionResult results = 1;
+
+    // The ID associated with the request
+    RequestId id = 100;
 }
 
 // A streaming speech recognition result corresponding to a portion of the audio

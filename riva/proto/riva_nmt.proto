@@ -12,6 +12,7 @@ package nvidia.riva.nmt;
 
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
+import "riva/proto/riva_common.proto";
 import "riva/proto/riva_audio.proto";
 import "riva/proto/riva_asr.proto";
 import "riva/proto/riva_tts.proto";
@@ -53,10 +54,13 @@ message StreamingTranslateSpeechToSpeechConfig {
 *
 */
 message StreamingTranslateSpeechToSpeechRequest {
-   oneof streaming_request {
-       StreamingTranslateSpeechToSpeechConfig config = 1;
-       bytes audio_content = 2;
-   }
+    oneof streaming_request {
+        StreamingTranslateSpeechToSpeechConfig config = 1;
+        bytes audio_content = 2;
+    }
+
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    RequestId id = 100;
 }
 
 message TranslationConfig {
@@ -77,20 +81,29 @@ message SynthesizeSpeechConfig {
 *
 */
 message StreamingTranslateSpeechToSpeechResponse {
-        // Contains speech responses, the last response sends an empty buffer to mark the end of stream.
-        nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
+    // Contains speech responses, the last response sends an empty buffer to mark the end of stream.
+    nvidia.riva.tts.SynthesizeSpeechResponse speech = 1; //from riva_tts.proto
+
+    // The ID associated with the request
+    RequestId id = 100;
 }
 
 message StreamingTranslateSpeechToTextRequest {
-  oneof streaming_request {
-     StreamingTranslateSpeechToTextConfig config = 1;
-     bytes audio_content = 2;
-  }
+    oneof streaming_request {
+        StreamingTranslateSpeechToTextConfig config = 1;
+        bytes audio_content = 2;
+    }
+
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    RequestId id = 100;
 }
 
 message StreamingTranslateSpeechToTextResponse {
 
-   repeated nvidia.riva.asr.StreamingRecognitionResult results = 1; //from riva_asr.proto
+    repeated nvidia.riva.asr.StreamingRecognitionResult results = 1; //from riva_asr.proto
+
+    // The ID associated with the request
+    RequestId id = 100;
 }
 
 message StreamingTranslateSpeechToTextConfig {
@@ -108,6 +121,9 @@ message TranslateTextRequest {
     string model = 2;
     string source_language = 3;
     string target_language = 4;
+
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    RequestId id = 100;
 }
 
 // contains a single translation, collecting into the translate text response
@@ -120,6 +136,9 @@ message Translation {
 // Translations are returned as text:language pairs.  These are 1:1 for the passed in 'texts' from the request.
 message TranslateTextResponse {
     repeated Translation translations = 1;
+
+    // The ID associated with the request
+    RequestId id = 100;
 }
 
 // Returns a map of model names to its source and target language pairs.

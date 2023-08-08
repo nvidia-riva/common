@@ -9,6 +9,7 @@ option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
 
 import "riva/proto/riva_audio.proto";
+import "riva/proto/riva_common.proto";
 
 service RivaSpeechSynthesis {
     // Used to request text-to-speech from the service. Submit a request containing the
@@ -43,7 +44,7 @@ message SynthesizeSpeechRequest {
     string language_code = 2;
     // audio encoding params
     AudioEncoding encoding = 3;
- 
+
     //  The sample rate in hertz (Hz) of the audio output requested through `SynthesizeSpeechRequest` messages.
     //  Models produce an output at a fixed rate. The sample rate enables you to resample the generated audio output if required.
     //  You use the sample rate to up-sample or down-sample the audio for various scenarios. For example, the sample rate can be set to 8kHz (kilohertz) if the output
@@ -54,6 +55,9 @@ message SynthesizeSpeechRequest {
     int32 sample_rate_hz = 4;
     // voice params
     string voice_name = 5;
+
+    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+    RequestId id = 100;
 }
 
 message SynthesizeSpeechResponseMetadata {
@@ -70,6 +74,9 @@ message SynthesizeSpeechResponseMetadata {
 message SynthesizeSpeechResponse {
     bytes audio = 1;
     SynthesizeSpeechResponseMetadata meta = 2;
+
+    // The ID associated with the request
+    RequestId id = 100;
 }
 
 /*

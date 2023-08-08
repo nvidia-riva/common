@@ -8,6 +8,8 @@ package nvidia.riva.nlp;
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
 
+import "riva/proto/riva_common.proto";
+
 /* Riva Natural Language Services implement generic and task-specific APIs.
  * The generic APIs allows users to design
  * models for arbitrary use cases that conform simply with input and output types
@@ -96,12 +98,18 @@ message TextTransformRequest {
   repeated string text = 1;
   uint32 top_n = 2; //
   NLPModelParams model = 3;
+
+  // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+  RequestId id = 100;
 }
 
 // TextTransformResponse is returned by the TransformText method. Responses
 // are returned in the same order as they were requested.
 message TextTransformResponse {
   repeated string text = 1;
+
+  // The ID associated with the request
+  RequestId id = 100;
 }
 
 // TextClassRequest is the input message to the ClassifyText service.
@@ -114,6 +122,9 @@ message TextClassRequest {
   // Note: Current disabled.
   uint32 top_n = 2;
   NLPModelParams model = 3;
+
+  // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+  RequestId id = 100;
 }
 
 // Classification messages return a class name and corresponding score
@@ -138,6 +149,9 @@ message ClassificationResult {
 // TextClassResponse is the return message from the ClassifyText service.
 message TextClassResponse {
   repeated ClassificationResult results = 1;
+
+  // The ID associated with the request
+  RequestId id = 100;
 }
 
 // TokenClassRequest is the input message to the ClassifyText service.
@@ -150,6 +164,9 @@ message TokenClassRequest {
   // Note: Current disabled.
   uint32 top_n = 3;
   NLPModelParams model = 4;
+
+  // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+  RequestId id = 100;
 }
 
 // TokenClassValue is used to correlate an input token with its classification results
@@ -168,6 +185,9 @@ message TokenClassSequence {
 // TokenClassResponse returns a single TokenClassSequence per input request
 message TokenClassResponse {
   repeated TokenClassSequence results = 1;
+
+  // The ID associated with the request
+  RequestId id = 100;
 }
 
 // AnalyzeIntentContext is reserved for future use when we may send context back in a
@@ -200,6 +220,9 @@ message AnalyzeIntentRequest {
   // Optional configuration for the request, including providing context from previous turns
   // and hardcoding a domain/language
   AnalyzeIntentOptions options = 2;
+
+  // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+  RequestId id = 100;
 }
 
 // AnalyzeIntentResponse is returned by the AnalyzeIntent service, and includes information
@@ -221,6 +244,9 @@ message AnalyzeIntentResponse {
   // the domain was hardcoded in AnalyzeIntentRequest, the returned domain is an exact match to the
   // request. In the case where no domain matches the query, intent and slots will be unset.
   Classification domain = 4;
+
+  // The ID associated with the request
+  RequestId id = 100;
 }
 
 // AnalyzeEntitiesOptions is an optional configuration message to be sent as part of
@@ -237,6 +263,9 @@ message AnalyzeEntitiesRequest {
   // Optional configuration for the request, including providing context from previous turns
   // and hardcoding a domain/language
   AnalyzeEntitiesOptions options = 2;
+
+  // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+  RequestId id = 100;
 }
 
 message NaturalQueryRequest {
@@ -248,6 +277,9 @@ message NaturalQueryRequest {
 
   // Context to search with the above query
   string context = 3;
+
+  // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
+  RequestId id = 100;
 }
 
 message NaturalQueryResult {
@@ -259,4 +291,7 @@ message NaturalQueryResult {
 
 message NaturalQueryResponse {
   repeated NaturalQueryResult results = 1;
+
+  // The ID associated with the request
+  RequestId id = 100;
 }
