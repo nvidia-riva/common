@@ -103,6 +103,15 @@ message StreamingRecognizeRequest {
     RequestId id = 100;
 }
 
+// Allows user to enable profanity filter with word removal
+enum ProfanitySettings {
+   // No profanity filtering
+   PROFANITY_OFF = 0;
+   // Apply profanity filter
+   PROFANITY_MASK = 1;
+   // Remove profane words from the transcript
+   PROFANITY_REMOVE = 2;
+}
 // Provides information to the recognizer that specifies how to process the request
 message RecognitionConfig {
     // The encoding of the audio data sent in the request.
@@ -129,10 +138,11 @@ message RecognitionConfig {
     int32 max_alternatives = 4;
 
     // A custom field that enables profanity filtering for the generated transcripts.
-    // If set to 'true', the server filters out profanities, replacing all but the initial
+    // If set to PROFANITY_MASK, the server filters out profanities, replacing all but the initial
     // character in each filtered word with asterisks. For example, "x**".
-    // If set to `false` or omitted, profanities will not be filtered out. The default is `false`.
-    bool profanity_filter=5;
+    // If set to PROFANITY_REMOVE, the server removes the profanities from the transcritps
+    // If set to `PROFANITY_OFF`, profanities will not be filtered out. The default is `PROFANITY_OFF`.
+    ProfanitySettings profanity_filter = 5;
 
     // Array of SpeechContext.
     // A means to provide context to assist the speech recognition. For more
