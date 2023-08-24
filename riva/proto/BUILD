@@ -52,6 +52,7 @@ cc_grpc_library(
          ":riva_audio_proto",
          ":riva_grpc_tts",
          ":riva_grpc_asr",
+         ":riva_common_proto",
          ]
 )
 
