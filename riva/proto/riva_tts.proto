@@ -46,9 +46,11 @@ message RivaSynthesisConfigResponse {
 
 // Required for Zero Shot model
 message ZeroShotData {
-  // Audio prompt for Zero Shot model. Duration should be between 3 to 10 seconds.
+  // Audio prompt for Zero Shot model. Duration should be between 3 to 10
+  // seconds.
   bytes audio_prompt = 1;
-  // Sample rate for input audio prompt.
+  // Sample rate for input audio prompt. Current defaults to 22050, can be user
+  // provided.
   int32 sample_rate_hz = 2;
   // Encoding of audio prompt. Supported encodings are LINEAR_PCM and OGGOPUS.
   AudioEncoding encoding = 3;
