@@ -39,6 +39,18 @@ message RivaSynthesisConfigResponse {
     repeated Config model_config = 1;
 }
 
+// Required for PFlow model
+message ZeroShotData {
+    // Small (3-sec) audio prompt for PFlow model.
+    bytes audio_prompt = 1;
+    // Sample rate for input audio prompt. Current defaults to 22050, can be user provided.
+    int32 sample_rate_hz = 2;
+    // Encoding of audio prompt, defaults to PCM.
+    AudioEncoding encoding = 3;
+    // The number of times user wants to pass audio to resampler. Current defaults to 20.
+    int32 quality = 4;
+}
+
 message SynthesizeSpeechRequest {
     string text = 1;
     string language_code = 2;
@@ -55,6 +67,9 @@ message SynthesizeSpeechRequest {
     int32 sample_rate_hz = 4;
     // voice params
     string voice_name = 5;
+
+    // PFlow params
+    ZeroShotData zero_shot_data = 6;
 
     // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
     RequestId id = 100;
