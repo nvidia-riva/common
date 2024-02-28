@@ -27,182 +27,195 @@ import "riva/proto/riva_audio.proto";
 import "riva/proto/riva_common.proto";
 
 /*
- * The RivaSpeechRecognition service provides two mechanisms for converting speech to text.
+ * The RivaSpeechRecognition service provides two mechanisms for converting
+ * speech to text.
  */
 service RivaSpeechRecognition {
-    // Recognize expects a RecognizeRequest and returns a RecognizeResponse. This request will block
-    // until the audio is uploaded, processed, and a transcript is returned.
-    rpc Recognize(RecognizeRequest) returns (RecognizeResponse) {}
-    // StreamingRecognize is a non-blocking API call that allows audio data to be fed to the server in
-    // chunks as it becomes available. Depending on the configuration in the StreamingRecognizeRequest,
-    // intermediate results can be sent back to the client. Recognition ends when the stream is closed
-    // by the client.
-    rpc StreamingRecognize(stream StreamingRecognizeRequest) returns (stream StreamingRecognizeResponse) {}
+  // Recognize expects a RecognizeRequest and returns a RecognizeResponse. This
+  // request will block until the audio is uploaded, processed, and a transcript
+  // is returned.
+  rpc Recognize(RecognizeRequest) returns (RecognizeResponse) {}
+  // StreamingRecognize is a non-blocking API call that allows audio data to be
+  // fed to the server in chunks as it becomes available. Depending on the
+  // configuration in the StreamingRecognizeRequest, intermediate results can be
+  // sent back to the client. Recognition ends when the stream is closed by the
+  // client.
+  rpc StreamingRecognize(stream StreamingRecognizeRequest)
+      returns (stream StreamingRecognizeResponse) {}
 
-
-    //Enables clients to request the configuration of the current ASR service, or a specific model within the service.
-    rpc GetRivaSpeechRecognitionConfig(RivaSpeechRecognitionConfigRequest) returns (RivaSpeechRecognitionConfigResponse) {}
+  // Enables clients to request the configuration of the current ASR service, or
+  // a specific model within the service.
+  rpc GetRivaSpeechRecognitionConfig(RivaSpeechRecognitionConfigRequest)
+      returns (RivaSpeechRecognitionConfigResponse) {}
 }
 
 /*
-* RivaSpeechRecognitionConfigRequest
-*/
+ * RivaSpeechRecognitionConfigRequest
+ */
 
 message RivaSpeechRecognitionConfigRequest {
-   //If model is specified only return config for model, otherwise return all configs.
-   string model_name = 1;
+  // If model is specified only return config for model, otherwise return all
+  // configs.
+  string model_name = 1;
 }
 
 message RivaSpeechRecognitionConfigResponse {
-    message Config {
-       string model_name = 1;
-       map<string,string> parameters = 2;
-    }
+  message Config {
+    string model_name = 1;
+    map<string, string> parameters = 2;
+  }
 
-    repeated Config model_config = 1;
+  repeated Config model_config = 1;
 }
 
 /*
  * RecognizeRequest is used for batch processing of a single audio recording.
  */
 message RecognizeRequest {
-    // Provides information to recognizer that specifies how to process the request.
-    RecognitionConfig config = 1;
-    // The raw audio data to be processed. The audio bytes must be encoded as specified in
-    // `RecognitionConfig`.
-    bytes audio = 2;
+  // Provides information to recognizer that specifies how to process the
+  // request.
+  RecognitionConfig config = 1;
+  // The raw audio data to be processed. The audio bytes must be encoded as
+  // specified in `RecognitionConfig`.
+  bytes audio = 2;
 
-    // The ID to be associated with the request. If provided, this will be returned in the corresponding response.
-    RequestId id = 100;
+  // The ID to be associated with the request. If provided, this will be
+  // returned in the corresponding response.
+  RequestId id = 100;
 }
-
 
 /*
- * A StreamingRecognizeRequest is used to configure and stream audio content to the
- * Riva ASR Service. The first message sent must include only a StreamingRecognitionConfig.
- * Subsequent messages sent in the stream must contain only raw bytes of the audio
- * to be recognized.
+ * A StreamingRecognizeRequest is used to configure and stream audio content to
+ * the Riva ASR Service. The first message sent must include only a
+ * StreamingRecognitionConfig. Subsequent messages sent in the stream must
+ * contain only raw bytes of the audio to be recognized.
  */
 message StreamingRecognizeRequest {
-    // The streaming request, which is either a streaming config or audio content.
-    oneof streaming_request {
-        // Provides information to the recognizer that specifies how to process the
-        // request. The first `StreamingRecognizeRequest` message must contain a
-        // `streaming_config`  message.
-        StreamingRecognitionConfig streaming_config = 1;
-        // The audio data to be recognized. Sequential chunks of audio data are sent
-        // in sequential `StreamingRecognizeRequest` messages. The first
-        // `StreamingRecognizeRequest` message must not contain `audio` data
-        // and all subsequent `StreamingRecognizeRequest` messages must contain
-        // `audio` data. The audio bytes must be encoded as specified in
-        // `RecognitionConfig`.
-        bytes audio_content = 2;
-    }
+  // The streaming request, which is either a streaming config or audio content.
+  oneof streaming_request {
+    // Provides information to the recognizer that specifies how to process the
+    // request. The first `StreamingRecognizeRequest` message must contain a
+    // `streaming_config`  message.
+    StreamingRecognitionConfig streaming_config = 1;
+    // The audio data to be recognized. Sequential chunks of audio data are sent
+    // in sequential `StreamingRecognizeRequest` messages. The first
+    // `StreamingRecognizeRequest` message must not contain `audio` data
+    // and all subsequent `StreamingRecognizeRequest` messages must contain
+    // `audio` data. The audio bytes must be encoded as specified in
+    // `RecognitionConfig`.
+    bytes audio_content = 2;
+  }
 
-    // The ID to be associated with the request. If provided, this will be returned in the corresponding responses.
-    RequestId id = 100;
+  // The ID to be associated with the request. If provided, this will be
+  // returned in the corresponding responses.
+  RequestId id = 100;
 }
 
-// Provides information to the recognizer that specifies how to process the request
+// Provides information to the recognizer that specifies how to process the
+// request
 message RecognitionConfig {
-    // The encoding of the audio data sent in the request.
-    //
-    // All encodings support only 1 channel (mono) audio.
-    AudioEncoding encoding = 1;
+  // The encoding of the audio data sent in the request.
+  //
+  // All encodings support only 1 channel (mono) audio.
+  AudioEncoding encoding = 1;
 
-    //  The sample rate in hertz (Hz) of the audio data sent in the
-    // `RecognizeRequest` or `StreamingRecognizeRequest` messages.
-    //  The Riva server will automatically down-sample/up-sample the audio to match the ASR acoustic model sample rate.
-    //  The sample rate value below 8kHz will not produce any meaningful output.
-    int32 sample_rate_hertz = 2;
+  //  The sample rate in hertz (Hz) of the audio data sent in the
+  // `RecognizeRequest` or `StreamingRecognizeRequest` messages.
+  //  The Riva server will automatically down-sample/up-sample the audio to
+  //  match the ASR acoustic model sample rate. The sample rate value below 8kHz
+  //  will not produce any meaningful output.
+  int32 sample_rate_hertz = 2;
 
-    // Required. The language of the supplied audio as a
-    // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-    // Example: "en-US".
-    string language_code = 3;
+  // Required. The language of the supplied audio as a
+  // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
+  // Example: "en-US".
+  string language_code = 3;
 
-    // Maximum number of recognition hypotheses to be returned.
-    // Specifically, the maximum number of `SpeechRecognizeAlternative` messages
-    // within each `SpeechRecognizeResult`.
-    // The server may return fewer than `max_alternatives`.
-    // If omitted, will return a maximum of one.
-    int32 max_alternatives = 4;
+  // Maximum number of recognition hypotheses to be returned.
+  // Specifically, the maximum number of `SpeechRecognizeAlternative` messages
+  // within each `SpeechRecognizeResult`.
+  // The server may return fewer than `max_alternatives`.
+  // If omitted, will return a maximum of one.
+  int32 max_alternatives = 4;
 
-    // A custom field that enables profanity filtering for the generated transcripts.
-    // If set to 'true', the server filters out profanities, replacing all but the initial
-    // character in each filtered word with asterisks. For example, "x**".
-    // If set to `false` or omitted, profanities will not be filtered out. The default is `false`.
-    bool profanity_filter=5;
+  // A custom field that enables profanity filtering for the generated
+  // transcripts. If set to 'true', the server filters out profanities,
+  // replacing all but the initial character in each filtered word with
+  // asterisks. For example, "x**". If set to `false` or omitted, profanities
+  // will not be filtered out. The default is `false`.
+  bool profanity_filter = 5;
 
-    // Array of SpeechContext.
-    // A means to provide context to assist the speech recognition. For more
-    // information, see SpeechContext section
-    repeated SpeechContext speech_contexts = 6;
+  // Array of SpeechContext.
+  // A means to provide context to assist the speech recognition. For more
+  // information, see SpeechContext section
+  repeated SpeechContext speech_contexts = 6;
 
-    // The number of channels in the input audio data.
-    // ONLY set this for MULTI-CHANNEL recognition.
-    // Valid values for LINEAR16 and FLAC are `1`-`8`.
-    // Valid values for OGG_OPUS are '1'-'254'.
-    // Valid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only `1`.
-    // If `0` or omitted, defaults to one channel (mono).
-    // Note: We only recognize the first channel by default.
-    // To perform independent recognition on each channel set
-    // `enable_separate_recognition_per_channel` to 'true'.
-    // Note: Only single channel audio input is supported as of now.
-    int32 audio_channel_count = 7;
+  // The number of channels in the input audio data.
+  // ONLY set this for MULTI-CHANNEL recognition.
+  // Valid values for LINEAR16 and FLAC are `1`-`8`.
+  // Valid values for OGG_OPUS are '1'-'254'.
+  // Valid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only `1`.
+  // If `0` or omitted, defaults to one channel (mono).
+  // Note: We only recognize the first channel by default.
+  // To perform independent recognition on each channel set
+  // `enable_separate_recognition_per_channel` to 'true'.
+  // Note: Only single channel audio input is supported as of now.
+  int32 audio_channel_count = 7;
 
-    // If `true`, the top result includes a list of words and the start and end
-    // time offsets (timestamps), and confidence scores for those words. If
-    // `false`, no word-level time offset information is returned. The default
-    // is `false`.
-    bool enable_word_time_offsets = 8;
+  // If `true`, the top result includes a list of words and the start and end
+  // time offsets (timestamps), and confidence scores for those words. If
+  // `false`, no word-level time offset information is returned. The default
+  // is `false`.
+  bool enable_word_time_offsets = 8;
 
-    // If 'true', adds punctuation to recognition result hypotheses. The
-    // default 'false' value does not add punctuation to result hypotheses.
-    bool enable_automatic_punctuation = 11;
+  // If 'true', adds punctuation to recognition result hypotheses. The
+  // default 'false' value does not add punctuation to result hypotheses.
+  bool enable_automatic_punctuation = 11;
 
-    // This needs to be set to `true` explicitly and `audio_channel_count` > 1
-    // to get each channel recognized separately. The recognition result will
-    // contain a `channel_tag` field to state which channel that result belongs
-    // to. If this is not true, we will only recognize the first channel. The
-    // request is billed cumulatively for all channels recognized:
-    // `audio_channel_count` multiplied by the length of the audio.
-    // Note: This field is not yet supported.
-    bool enable_separate_recognition_per_channel = 12;
+  // This needs to be set to `true` explicitly and `audio_channel_count` > 1
+  // to get each channel recognized separately. The recognition result will
+  // contain a `channel_tag` field to state which channel that result belongs
+  // to. If this is not true, we will only recognize the first channel. The
+  // request is billed cumulatively for all channels recognized:
+  // `audio_channel_count` multiplied by the length of the audio.
+  // Note: This field is not yet supported.
+  bool enable_separate_recognition_per_channel = 12;
 
-    // Which model to select for the given request.
-    // If empty, Riva will select the right model based on the other RecognitionConfig parameters.
-    // The model should correspond to the name passed to `riva-build` with the `--name` argument
-    string model = 13;
+  // Which model to select for the given request.
+  // If empty, Riva will select the right model based on the other
+  // RecognitionConfig parameters. The model should correspond to the name
+  // passed to `riva-build` with the `--name` argument
+  string model = 13;
 
-    // The verbatim_transcripts flag enables or disable inverse text normalization.
-    // 'true' returns exactly what was said, with no denormalization.
-    // 'false' applies inverse text normalization, also this is the default
-    bool verbatim_transcripts = 14;
+  // The verbatim_transcripts flag enables or disable inverse text
+  // normalization. 'true' returns exactly what was said, with no
+  // denormalization. 'false' applies inverse text normalization, also this is
+  // the default
+  bool verbatim_transcripts = 14;
 
-    // Config to enable speaker diarization and set additional
-    // parameters. For non-streaming requests, the diarization results will be provided only
-    // in the top alternative of the FINAL SpeechRecognitionResult.
-    SpeakerDiarizationConfig diarization_config = 19;
+  // Config to enable speaker diarization and set additional
+  // parameters. For non-streaming requests, the diarization results will be
+  // provided only in the top alternative of the FINAL SpeechRecognitionResult.
+  SpeakerDiarizationConfig diarization_config = 19;
 
-    // Custom fields for passing request-level
-    // configuration options to plugins used in the
-    // model pipeline.
-    map<string, string> custom_configuration = 24;
-
-
+  // Custom fields for passing request-level
+  // configuration options to plugins used in the
+  // model pipeline.
+  map<string, string> custom_configuration = 24;
 }
 
-// Provides information to the recognizer that specifies how to process the request
+// Provides information to the recognizer that specifies how to process the
+// request
 message StreamingRecognitionConfig {
-    // Provides information to the recognizer that specifies how to process the request
-    RecognitionConfig config = 1;
+  // Provides information to the recognizer that specifies how to process the
+  // request
+  RecognitionConfig config = 1;
 
-    // If `true`, interim results (tentative hypotheses) may be
-    // returned as they become available (these interim results are indicated with
-    // the `is_final=false` flag).
-    // If `false` or omitted, only `is_final=true` result(s) are returned.
-    bool interim_results = 2;
+  // If `true`, interim results (tentative hypotheses) may be
+  // returned as they become available (these interim results are indicated with
+  // the `is_final=false` flag).
+  // If `false` or omitted, only `is_final=true` result(s) are returned.
+  bool interim_results = 2;
 }
 
 // Config to enable speaker diarization.
@@ -213,15 +226,14 @@ message SpeakerDiarizationConfig {
   bool enable_speaker_diarization = 1;
 
   // Maximum number of speakers in the conversation. This gives flexibility by
-  // allowing the system to automatically determine the correct number of speakers.
-  // If not set, the default value is 8.
+  // allowing the system to automatically determine the correct number of
+  // speakers. If not set, the default value is 8.
   int32 max_speaker_count = 2;
 }
 
 // Provides "hints" to the speech recognizer to favor specific words and phrases
 // in the results.
 message SpeechContext {
-
   // A list of strings containing words and phrases "hints" so that
   // the speech recognition is more likely to recognize them. This can be used
   // to improve the accuracy for specific words and phrases, for example, if
@@ -232,9 +244,9 @@ message SpeechContext {
   // Hint Boost. Positive value will increase the probability that a specific
   // phrase will be recognized over other similar sounding phrases. The higher
   // the boost, the higher the chance of false positive recognition as well.
-  // Though `boost` can accept a wide range of positive values, most use cases are best served with
-  // values between 0 and 20. We recommend using a binary search approach to
-  // finding the optimal value for your use case.
+  // Though `boost` can accept a wide range of positive values, most use cases
+  // are best served with values between 0 and 20. We recommend using a binary
+  // search approach to finding the optimal value for your use case.
   float boost = 4;
 }
 
@@ -242,17 +254,16 @@ message SpeechContext {
 // contains the result as zero or more sequential `SpeechRecognitionResult`
 // messages.
 message RecognizeResponse {
-    // Sequential list of transcription results corresponding to
-    // sequential portions of audio. Currently only returns one transcript.
-    repeated SpeechRecognitionResult results = 1;
+  // Sequential list of transcription results corresponding to
+  // sequential portions of audio. Currently only returns one transcript.
+  repeated SpeechRecognitionResult results = 1;
 
-    // The ID associated with the request
-    RequestId id = 100;
+  // The ID associated with the request
+  RequestId id = 100;
 }
 
 // A speech recognition result corresponding to the latest transcript
 message SpeechRecognitionResult {
-
   // May contain one or more recognition hypotheses (up to the
   // maximum specified in `max_alternatives`).
   // These alternatives are ordered in terms of accuracy, with the top (first)
@@ -283,8 +294,8 @@ message SpeechRecognitionAlternative {
   // 0.0 is a sentinel value indicating confidence was not set.
   float confidence = 2;
 
-  // A list of word-specific information for each recognized word. Only populated
-  // if is_final=true
+  // A list of word-specific information for each recognized word. Only
+  // populated if is_final=true
   repeated WordInfo words = 3;
 }
 
@@ -340,15 +351,14 @@ message WordInfo {
 //
 
 message StreamingRecognizeResponse {
+  // This repeated list contains the latest transcript(s) corresponding to
+  // audio currently being processed.
+  // Currently one result is returned, where each result can have multiple
+  // alternatives
+  repeated StreamingRecognitionResult results = 1;
 
-    // This repeated list contains the latest transcript(s) corresponding to
-    // audio currently being processed.
-    // Currently one result is returned, where each result can have multiple
-    // alternatives
-    repeated StreamingRecognitionResult results = 1;
-
-    // The ID associated with the request
-    RequestId id = 100;
+  // The ID associated with the request
+  RequestId id = 100;
 }
 
 // A streaming speech recognition result corresponding to a portion of the audio
