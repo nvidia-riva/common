@@ -152,8 +152,6 @@ message RecognitionConfig {
 
   // The number of channels in the input audio data.
   // If `0` or omitted, defaults to one channel (mono).
-  // To perform independent recognition on each channel set
-  // `enable_separate_recognition_per_channel` to 'true'.
   // Note: Only single channel audio input is supported as of now.
   int32 audio_channel_count = 7;
 
