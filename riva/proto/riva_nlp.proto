@@ -13,24 +13,24 @@ import "riva/proto/riva_common.proto";
 /* Riva Natural Language Services implement generic and task-specific APIs.
  * The generic APIs allows users to design
  * models for arbitrary use cases that conform simply with input and output
- * types specified in the service. As an explicit example, the ClassifyText
- * function could be used for sentiment classification, domain recognition,
- * language identification, etc. The task-specific APIs can be used for popular
- * NLP tasks such as intent recognition (as well as slot filling), and entity
- * extraction.
+ * types specified in the service.
  */
 
 service RivaLanguageUnderstanding {
   // ClassifyText takes as input an input/query string and parameters related
   // to the requested model to use to evaluate the text. The service evaluates
   // the text with the requested model, and returns one or more classifications.
-  rpc ClassifyText(TextClassRequest) returns (TextClassResponse) {}
+  rpc ClassifyText(TextClassRequest) returns (TextClassResponse) {
+    option deprecated = true;
+  }
 
   // ClassifyTokens takes as input either a string or list of tokens and
   // parameters related to which model to use. The service evaluates the text
   // with the requested model, performing additional tokenization if necessary,
   // and returns one or more class labels per token.
-  rpc ClassifyTokens(TokenClassRequest) returns (TokenClassResponse) {}
+  rpc ClassifyTokens(TokenClassRequest) returns (TokenClassResponse) {
+    option deprecated = true;
+  }
 
   // TransformText takes an input/query string and parameters related to the
   // requested model and returns another string. The behavior of the function
@@ -41,7 +41,9 @@ service RivaLanguageUnderstanding {
 
   // AnalyzeEntities accepts an input string and returns all named entities
   // within the text, as well as a category and likelihood.
-  rpc AnalyzeEntities(AnalyzeEntitiesRequest) returns (TokenClassResponse) {}
+  rpc AnalyzeEntities(AnalyzeEntitiesRequest) returns (TokenClassResponse) {
+    option deprecated = true;
+  }
 
   // AnalyzeIntent accepts an input string and returns the most likely
   // intent as well as slots relevant to that intent.
@@ -49,7 +51,9 @@ service RivaLanguageUnderstanding {
   // The model requires that a valid "domain" be passed in, and optionally
   // supports including a previous intent classification result to provide
   // context for the model.
-  rpc AnalyzeIntent(AnalyzeIntentRequest) returns (AnalyzeIntentResponse) {}
+  rpc AnalyzeIntent(AnalyzeIntentRequest) returns (AnalyzeIntentResponse) {
+    option deprecated = true;
+  }
 
   // PunctuateText takes text with no- or limited- punctuation and returns
   // the same text with corrected punctuation and capitalization.
@@ -57,7 +61,9 @@ service RivaLanguageUnderstanding {
 
   // NaturalQuery is a search function that enables querying one or more
   // documents or contexts with a query that is written in natural language.
-  rpc NaturalQuery(NaturalQueryRequest) returns (NaturalQueryResponse) {}
+  rpc NaturalQuery(NaturalQueryRequest) returns (NaturalQueryResponse) {
+    option deprecated = true;
+  }
 
   // Enables clients to request the configuration of the current ASR service, or
   // a specific model within the service.
@@ -120,82 +126,82 @@ message TextTransformResponse {
 message TextClassRequest {
   // Each repeated text element is handled independently for handling multiple
   // input strings with a single request
-  repeated string text = 1;
+  repeated string text = 1 [deprecated=true];
 
   // Return the top N classification results for each input. 0 or 1 will return
   // top class, otherwise N. Note: Current disabled.
-  uint32 top_n = 2;
-  NLPModelParams model = 3;
+  uint32 top_n = 2 [deprecated=true];
+  NLPModelParams model = 3 [deprecated=true];
 
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
 
 // Classification messages return a class name and corresponding score
 message Classification {
-  string class_name = 1;
-  float score = 2;
+  string class_name = 1 [deprecated=true];
+  float score = 2 [deprecated=true];
 }
 
 // Span of a particular result
 message Span {
-  uint32 start = 1;
-  uint32 end = 2;
+  uint32 start = 1 [deprecated=true];
+  uint32 end = 2 [deprecated=true];
 }
 
 // ClassificationResults contain zero or more Classification messages
 // If the number of Classifications is > 1, top_n > 1 must have been
 // specified.
 message ClassificationResult {
-  repeated Classification labels = 1;
+  repeated Classification labels = 1 [deprecated=true];
 }
 
 // TextClassResponse is the return message from the ClassifyText service.
 message TextClassResponse {
-  repeated ClassificationResult results = 1;
+  repeated ClassificationResult results = 1 [deprecated=true];
 
   // The ID associated with the request
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
 
 // TokenClassRequest is the input message to the ClassifyText service.
 message TokenClassRequest {
   // Each repeated text element is handled independently for handling multiple
   // input strings with a single request
-  repeated string text = 1;
+  repeated string text = 1 [deprecated=true];
 
   // Return the top N classification results for each input. 0 or 1 will return
   // top class, otherwise N.
   // Note: Current disabled.
-  uint32 top_n = 3;
-  NLPModelParams model = 4;
+  uint32 top_n = 3 [deprecated=true];
+  NLPModelParams model = 4 [deprecated=true];
 
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
 
 // TokenClassValue is used to correlate an input token with its classification
 // results
 message TokenClassValue {
-  string token = 1;
-  repeated Classification label = 2;
-  repeated Span span = 3;
+  string token = 1 [deprecated=true];
+  repeated Classification label = 2 [deprecated=true];
+  repeated Span span = 3 [deprecated=true];
 }
 
 // TokenClassSequence is used for returning a sequence of TokenClassValue
 // objects in the original order of input tokens
 message TokenClassSequence {
-  repeated TokenClassValue results = 1;
+  repeated TokenClassValue results = 1 [deprecated=true];
 }
 
 // TokenClassResponse returns a single TokenClassSequence per input request
 message TokenClassResponse {
-  repeated TokenClassSequence results = 1;
+  repeated TokenClassSequence results = 1 [deprecated=true];
 
   // The ID associated with the request
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
 
 // AnalyzeIntentContext is reserved for future use when we may send context back
@@ -211,29 +217,29 @@ message AnalyzeIntentOptions {
   // Optionally provide context from previous interactions to bias the model's
   // prediction
   oneof context {
-    string previous_intent = 1;
-    AnalyzeIntentContext vectors = 2;
+    string previous_intent = 1 [deprecated=true];
+    AnalyzeIntentContext vectors = 2 [deprecated=true];
   }
   // Optional domain field. Domain must be supported otherwise an error will be
   // returned. If left blank, a domain detector will be run first and then the
   // query routed to the appropriate intent classifier (if it exists)
-  string domain = 3;
+  string domain = 3 [deprecated=true];
 
   // Optional language field. Assumed to be "en-US" if not specified.
-  string lang = 4;
+  string lang = 4 [deprecated=true];
 }
 
 // AnalyzeIntentRequest is the input message for the AnalyzeIntent service
 message AnalyzeIntentRequest {
   // The string to analyze for intent and slots
-  string query = 1;
+  string query = 1 [deprecated=true];
   // Optional configuration for the request, including providing context from
   // previous turns and hardcoding a domain/language
-  AnalyzeIntentOptions options = 2;
+  AnalyzeIntentOptions options = 2 [deprecated=true];
 
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
 
 // AnalyzeIntentResponse is returned by the AnalyzeIntent service, and includes
@@ -241,75 +247,75 @@ message AnalyzeIntentRequest {
 // domain.
 message AnalyzeIntentResponse {
   // Intent classification result, including the label and score
-  Classification intent = 1;
+  Classification intent = 1 [deprecated=true];
   // List of tokens explicitly marked as filling a slot relevant to the intent,
   // where the tokens may not exactly match the input (based on the recombined
   // values after tokenization)
-  repeated TokenClassValue slots = 2;
+  repeated TokenClassValue slots = 2 [deprecated=true];
   // Returns the inferred domain for the query if not hardcoded in the request.
   // In the case where the domain was hardcoded in AnalyzeIntentRequest, the
   // returned domain is an exact match to the request. In the case where no
   // domain matches the query, intent and slots will be unset.
   //
   // DEPRECATED, use Classification domain field.
-  string domain_str = 3;
+  string domain_str = 3 [deprecated=true];
 
   // Returns the inferred domain for the query if not hardcoded in the request.
   // In the case where the domain was hardcoded in AnalyzeIntentRequest, the
   // returned domain is an exact match to the request. In the case where no
   // domain matches the query, intent and slots will be unset.
-  Classification domain = 4;
+  Classification domain = 4 [deprecated=true];
 
   // The ID associated with the request
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
 
 // AnalyzeEntitiesOptions is an optional configuration message to be sent as
 // part of an AnalyzeEntitiesRequest with query metadata
 message AnalyzeEntitiesOptions {
   // Optional language field. Assumed to be "en-US" if not specified.
-  string lang = 4;
+  string lang = 4 [deprecated=true];
 }
 
 // AnalyzeEntitiesRequest is the input message for the AnalyzeEntities service
 message AnalyzeEntitiesRequest {
   // The string to analyze for intent and slots
-  string query = 1;
+  string query = 1 [deprecated=true];
   // Optional configuration for the request, including providing context from
   // previous turns and hardcoding a domain/language
-  AnalyzeEntitiesOptions options = 2;
+  AnalyzeEntitiesOptions options = 2 [deprecated=true];
 
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
 
 message NaturalQueryRequest {
   // The natural language query
-  string query = 1;
+  string query = 1 [deprecated=true];
 
   // Maximum number of answers to return for the query. Defaults to 1 if not
   // set.
-  uint32 top_n = 2;
+  uint32 top_n = 2 [deprecated=true];
 
   // Context to search with the above query
-  string context = 3;
+  string context = 3 [deprecated=true];
 
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
 
 message NaturalQueryResult {
   // text which answers the query
-  string answer = 1;
+  string answer = 1 [deprecated=true];
   // Score representing confidence in result
-  float score = 2;
+  float score = 2 [deprecated=true];
 }
 
 message NaturalQueryResponse {
-  repeated NaturalQueryResult results = 1;
+  repeated NaturalQueryResult results = 1 [deprecated=true];
 
   // The ID associated with the request
-  RequestId id = 100;
+  RequestId id = 100 [deprecated=true];
 }
