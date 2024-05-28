@@ -111,6 +111,15 @@ message StreamingRecognizeRequest {
   RequestId id = 100;
 }
 
+// Provides information on all end of utterance related values
+message EOUConfig {
+	optional int32 endpoint_start_history = 1;
+	optional float endpoint_start_threshold = 2;
+	optional int32 endpoint_reset_history = 3;
+	optional int32 endpoint_response_history = 4;
+	optional float endpoint_stop_threshold = 5;
+}
+
 // Provides information to the recognizer that specifies how to process the
 // request
 message RecognitionConfig {
@@ -190,11 +199,14 @@ message RecognitionConfig {
   // parameters. For non-streaming requests, the diarization results will be
   // provided only in the top alternative of the FINAL SpeechRecognitionResult.
   SpeakerDiarizationConfig diarization_config = 19;
+	
+  // End of Utterance values are configurable
+  EOUConfig eou_config = 24;	
 
   // Custom fields for passing request-level
   // configuration options to plugins used in the
   // model pipeline.
-  map<string, string> custom_configuration = 24;
+  map<string, string> custom_configuration = 29;
 }
 
 // Provides information to the recognizer that specifies how to process the
