@@ -112,9 +112,9 @@ message StreamingRecognizeRequest {
 }
 
 /*
- * EOUConfig is used for configure all end of utterance related values
+ * EndpointingConfig is used for configure all end of utterance related values
  */
-message EOUConfig {
+message EndpointingConfig {
 	optional int32 start_history = 1;
 	optional float start_threshold = 2;
 	optional int32 stop_history = 3;
@@ -209,7 +209,7 @@ message RecognitionConfig {
 
   // Option to configure End of Utterance parameters.
   // If empty, Riva will use default values.
-  EOUConfig eou_config = 25;	
+  EndpointingConfig endpointing_config = 25;	
 }
 
 // Provides information to the recognizer that specifies how to process the
