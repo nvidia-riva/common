@@ -207,8 +207,8 @@ message RecognitionConfig {
   // model pipeline.
   map<string, string> custom_configuration = 24;
 
-  // Option to configure different fields related to start or end of utterance.
-  // If empty, Riva will use default values.
+  // Config for tuning start or end of utterance parameters.
+  // If empty, Riva will use default values or custom values if specified in riva-build arguments.
   EndpointingConfig endpointing_config = 25;	
 }
 
