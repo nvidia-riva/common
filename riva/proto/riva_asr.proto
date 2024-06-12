@@ -209,7 +209,7 @@ message RecognitionConfig {
 
   // Config for tuning start or end of utterance parameters.
   // If empty, Riva will use default values or custom values if specified in riva-build arguments.
-  EndpointingConfig endpointing_config = 25;	
+  optional EndpointingConfig endpointing_config = 25;	
 }
 
 // Provides information to the recognizer that specifies how to process the
