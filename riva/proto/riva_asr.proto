@@ -111,6 +111,17 @@ message StreamingRecognizeRequest {
   RequestId id = 100;
 }
 
+/*
+ * EndpointingConfig is used for configuring different fields related to start or end of utterance
+ */
+message EndpointingConfig {
+  optional int32 start_history = 1;
+  optional float start_threshold = 2;
+  optional int32 stop_history = 3;
+  optional int32 stop_history_eou = 4;
+  optional float stop_threshold = 5;
+}
+
 // Provides information to the recognizer that specifies how to process the
 // request
 message RecognitionConfig {
@@ -195,6 +206,10 @@ message RecognitionConfig {
   // configuration options to plugins used in the
   // model pipeline.
   map<string, string> custom_configuration = 24;
+
+  // Config for tuning start or end of utterance parameters.
+  // If empty, Riva will use default values or custom values if specified in riva-build arguments.
+  optional EndpointingConfig endpointing_config = 25;	
 }
 
 // Provides information to the recognizer that specifies how to process the
