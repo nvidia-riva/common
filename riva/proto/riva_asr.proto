@@ -120,6 +120,7 @@ message EndpointingConfig {
   optional int32 stop_history = 3;
   optional int32 stop_history_eou = 4;
   optional float stop_threshold = 5;
+  optional float stop_eou_threshold = 6;
 }
 
 // Provides information to the recognizer that specifies how to process the
