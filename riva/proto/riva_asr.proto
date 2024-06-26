@@ -115,12 +115,24 @@ message StreamingRecognizeRequest {
  * EndpointingConfig is used for configuring different fields related to start or end of utterance
  */
 message EndpointingConfig {
+  // `start_history` is the size of the window, in milliseconds, used to detect start of utterance.
+  // `start_threshold` is the percentage threshold used to detect start of utterance. (0.0 to 1.0)
+  // If `start_threshold` of `start_history` ms of the acoustic model output have non-blank tokens, start of utterance is detected.
   optional int32 start_history = 1;
   optional float start_threshold = 2;
+
+  // `stop_history` is the size of the window, in milliseconds, used to detect end of utterance.
+  // `stop_threshold` is the percentage threshold used to detect end of utterance. (0.0 to 1.0)
+  // If `stop_threshold` of `stop_history` ms of the acoustic model output have non-blank tokens, end of utterance is detected and decoder will be reset.
   optional int32 stop_history = 3;
-  optional int32 stop_history_eou = 4;
-  optional float stop_threshold = 5;
-  optional float stop_eou_threshold = 6;
+  optional float stop_threshold = 4;
+
+  // `stop_history_eou` and `stop_threshold_eou` are used for 2-pass end of utterance.
+  // `stop_history_eou` is the size of the window, in milliseconds, used to trigger 1st pass of end of utterance and generate a partial transcript with stability of 1. (stop_history_eou < stop_history)
+  // `stop_threshold_eou` is the percentage threshold used to trigger 1st pass of end of utterance. (0.0 to 1.0)
+  // If `stop_threshold_eou` of `stop_history_eou` ms of the acoustic model output have non-blank tokens, 1st pass of end of utterance is triggered.
+  optional int32 stop_history_eou = 5;
+  optional float stop_threshold_eou = 6;
 }
 
 // Provides information to the recognizer that specifies how to process the
