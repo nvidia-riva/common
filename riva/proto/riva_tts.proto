@@ -80,8 +80,8 @@ message SynthesizeSpeechRequest {
   // Zero Shot model params
   ZeroShotData zero_shot_data = 6;
 
-  // user_dictionary parameters
-  string user_dictionary = 7;
+  // custom_dictionary parameters
+  string custom_dictionary = 7;
 
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
