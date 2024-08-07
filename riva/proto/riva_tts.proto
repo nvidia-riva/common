@@ -80,6 +80,10 @@ message SynthesizeSpeechRequest {
   // Zero Shot model params
   ZeroShotData zero_shot_data = 6;
 
+  // A string containing comma-separated key-value pairs of
+  // grapheme and corresponding phoneme separated by double spaces.
+  string custom_dictionary = 7;
+
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
   RequestId id = 100;
