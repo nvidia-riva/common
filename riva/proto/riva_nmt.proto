@@ -82,6 +82,9 @@ message SynthesizeSpeechConfig {
   int32 sample_rate_hz = 2;
   string voice_name = 3;
   string language_code = 4;
+  string prosody_rate = 5;
+  string prosody_pitch = 6;
+  string prosody_volume = 7;
 }
 
 message StreamingTranslateSpeechToSpeechResponse {
