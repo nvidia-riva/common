@@ -75,6 +75,11 @@ message TranslationConfig {
   string source_language_code = 1;
   string target_language_code = 2;
   string model_name = 3;
+  // A list of words or phrases that will not be translated by the
+  // pipeline. This list can include special words or phrases, for example,
+  // names, acronyms or any phrases desired to be excluded from translation.
+  // These words or phrases will be present as-is in the translated output.
+  repeated string dnt_phrases = 4;
 }
 
 message SynthesizeSpeechConfig {
