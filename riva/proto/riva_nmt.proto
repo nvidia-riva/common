@@ -156,9 +156,10 @@ message TranslateTextResponse {
 }
 
 // Returns a map of model names to its source and target language pairs.
-// Can specificy a specific model name to retrieve only its language pairs.
+// Can specify a specific model name to retrieve only its language pairs.
 message AvailableLanguageRequest {
-  // If empty returns all available languages.
+  // Supported values: "s2s_model", "s2t_model", and name of the deployed t2t model.
+  // If empty, returns all available models and languages.
   string model = 1;
 }
 
