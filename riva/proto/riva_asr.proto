@@ -233,7 +233,10 @@ message RecognitionConfig {
 
   // Config for tuning start or end of utterance parameters.
   // If empty, Riva will use default values or custom values if specified in riva-build arguments.
-  optional EndpointingConfig endpointing_config = 25;	
+  optional EndpointingConfig endpointing_config = 25;
+
+  // Get Neural VAD states from server
+  bool get_vad_probabilities = 26;
 }
 
 // Provides information to the recognizer that specifies how to process the
@@ -424,9 +427,6 @@ message StreamingRecognitionResult {
   // Length of audio processed so far in seconds
   float audio_processed = 6;
 
-  // If true, response contains neural vad probabilities
-  bool is_vad_probs = 7;
-
   // Neural VAD probabilities
-  repeated float vad_probs = 8;
+  repeated float vad_probs = 7;
 }
