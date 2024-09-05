@@ -430,5 +430,5 @@ message StreamingRecognitionResult {
   float audio_processed = 6;
 
   // Message for pipeline states
-  PipelineStates pipeline_states = 7;
+  optional PipelineStates pipeline_states = 7;
 }
