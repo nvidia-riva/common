@@ -423,4 +423,10 @@ message StreamingRecognitionResult {
 
   // Length of audio processed so far in seconds
   float audio_processed = 6;
+
+  // If true, response contains neural vad probabilities
+  bool is_vad_probs = 7;
+
+  // Neural VAD probabilities
+  repeated float vad_probs = 8;
 }
