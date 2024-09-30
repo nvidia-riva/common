@@ -75,6 +75,11 @@ message TranslationConfig {
   string source_language_code = 1;
   string target_language_code = 2;
   string model_name = 3;
+  // A list of words or phrases that will not be translated by the
+  // pipeline. This list can include special words or phrases, for example,
+  // names, acronyms or any phrases desired to be excluded from translation.
+  // These words or phrases will be present as-is in the translated output.
+  repeated string dnt_phrases = 4;
 }
 
 message SynthesizeSpeechConfig {
@@ -156,9 +161,10 @@ message TranslateTextResponse {
 }
 
 // Returns a map of model names to its source and target language pairs.
-// Can specificy a specific model name to retrieve only its language pairs.
+// Can specify a specific model name to retrieve only its language pairs.
 message AvailableLanguageRequest {
-  // If empty returns all available languages.
+  // Supported values: "s2s_model", "s2t_model", and name of the deployed t2t model.
+  // If empty, returns all available models and languages.
   string model = 1;
 }
 
