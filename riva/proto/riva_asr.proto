@@ -393,7 +393,7 @@ message StreamingRecognizeResponse {
   RequestId id = 100;
 }
 
-message PipelineStates{
+message PipelineStates {
   // Neural VAD probabilities
   repeated float vad_probabilities = 1;
 }
