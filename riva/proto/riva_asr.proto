@@ -233,7 +233,7 @@ message RecognitionConfig {
 
   // Config for tuning start or end of utterance parameters.
   // If empty, Riva will use default values or custom values if specified in riva-build arguments.
-  optional EndpointingConfig endpointing_config = 25;	
+  optional EndpointingConfig endpointing_config = 25;
 }
 
 // Provides information to the recognizer that specifies how to process the
@@ -393,6 +393,11 @@ message StreamingRecognizeResponse {
   RequestId id = 100;
 }
 
+message PipelineStates {
+  // Neural VAD probabilities
+  repeated float vad_probabilities = 1;
+}
+
 // A streaming speech recognition result corresponding to a portion of the audio
 // that is currently being processed.
 message StreamingRecognitionResult {
@@ -423,4 +428,7 @@ message StreamingRecognitionResult {
 
   // Length of audio processed so far in seconds
   float audio_processed = 6;
+
+  // Message for pipeline states
+  optional PipelineStates pipeline_states = 7;
 }
