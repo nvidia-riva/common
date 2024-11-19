@@ -137,7 +137,7 @@ message TranslateTextRequest {
   string model = 2;
   string source_language = 3;
   string target_language = 4;
-
+  repeated string dnt_phrases = 5;
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
   RequestId id = 100;
