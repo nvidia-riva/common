@@ -137,7 +137,12 @@ message TranslateTextRequest {
   string model = 2;
   string source_language = 3;
   string target_language = 4;
-  repeated string custom_dnt_phrases = 5;
+  //This field contains list of words or phrases which are not to be translated 
+  //and also a list of words and phrases which are to be custom translated.
+  //The words which are be custom translated are present as "<original>##<translation>"
+  //the words which are not to be translated are present as "<word>".
+  //All these words and phrases are separted by commas in dnt_phrases_string.
+  repeated string dnt_phrases = 5;
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
   RequestId id = 100;
