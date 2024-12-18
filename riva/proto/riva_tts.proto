@@ -57,13 +57,12 @@ message ZeroShotData {
   // The number of times user wants to pass audio through decoder. This ranges
   // between 1-40. Defaults to 20.
   int32 quality = 4;
-  //
-  string textPrompt = 5;
   // Transcript corresponding to audio_prompt.
-  string transcriptTarget = 6;
+  string target_transcript = 5;
 }
 
 message SynthesizeSpeechRequest {
+  // Text to be converted to audio
   string text = 1;
   string language_code = 2;
   // audio encoding params
