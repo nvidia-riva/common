@@ -141,7 +141,7 @@ message TranslateTextRequest {
   // A list of words or phrases that are not to be translated or
   // to be custom translated by the pipeline. Words to be custom translated
   // should be specified as "<word>##<custom_translation>" and
-  // words not be translated should be specified as "<word>".
+  // words not be translated should be specified as "<word>##".
   repeated string dnt_phrases = 5;
 
   // The ID to be associated with the request. If provided, this will be
