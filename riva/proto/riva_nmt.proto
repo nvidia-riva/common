@@ -144,6 +144,8 @@ message TranslateTextRequest {
   // words not be translated should be specified as "<word>##".
   repeated string dnt_phrases = 5;
 
+  // controls the maximum variation between the length of source and translated text in terms of tokens.
+  string max_len_variation = 6;
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
   RequestId id = 100;
