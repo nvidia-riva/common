@@ -329,6 +329,9 @@ message SpeechRecognitionAlternative {
   // A list of word-specific information for each recognized word. Only
   // populated if is_final=true
   repeated WordInfo words = 3;
+
+  // List of language codes detected in the transcript.
+  repeated string language_code = 4;
 }
 
 // Word-specific information for recognized words.
@@ -364,6 +367,9 @@ message WordInfo {
   // speaker_tag is set if enable_speaker_diarization = 'true' and only in the
   // top alternative.
   int32 speaker_tag = 5;
+
+  // The language code of the word.
+  string language_code = 6;
 }
 
 // `StreamingRecognizeResponse` is the only message returned to the client by
