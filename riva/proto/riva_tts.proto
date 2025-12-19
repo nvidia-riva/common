@@ -20,7 +20,7 @@ service RivaSpeechSynthesis {
   // Used to request text-to-speech returned via stream as it becomes available.
   // Submit a SynthesizeSpeechRequest with desired text and configuration,
   // and receive stream of bytes in the requested format.
-  rpc SynthesizeOnline(SynthesizeSpeechRequest)
+  rpc SynthesizeOnline(stream SynthesizeSpeechRequest)
       returns (stream SynthesizeSpeechResponse) {}
 
   // Enables clients to request the configuration of the current Synthesize
