@@ -59,14 +59,9 @@ message ZeroShotData {
   int32 quality = 4;
   // Transcript corresponding to audio_prompt.
   string transcript = 5;
-}
-
-message ChatterboxData {
-  // Audio prompt for Chatterbox model.
-  bytes audio_prompt = 1;
 
   // Exaggeration factor for generated voice.
-  float exaggeration_factor = 2;
+  float exaggeration_factor = 6;
 }
 
 message SynthesizeSpeechRequest {
@@ -97,8 +92,6 @@ message SynthesizeSpeechRequest {
   // grapheme and corresponding phoneme separated by double spaces.
   string custom_dictionary = 7;
 
-  // Chatterbox specific params.
-  ChatterboxData chatterbox_data = 8;
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
   RequestId id = 100;
