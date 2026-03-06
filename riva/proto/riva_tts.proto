@@ -59,6 +59,9 @@ message ZeroShotData {
   int32 quality = 4;
   // Transcript corresponding to audio_prompt.
   string transcript = 5;
+
+  // Exaggeration factor for generated voice.
+  float exaggeration_factor = 6;
 }
 
 message SynthesizeSpeechRequest {
@@ -112,7 +115,3 @@ message SynthesizeSpeechResponse {
   // The ID associated with the request
   RequestId id = 100;
 }
-
-/*
- *
- */
