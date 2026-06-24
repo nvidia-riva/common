@@ -1,10 +1,10 @@
-# NVIDIA Riva Common
+# NVIDIA Nemotron Speech Common
 
-[NVIDIA Riva](https://developer.nvidia.com/riva) is a GPU-accelerated SDK for building Speech AI applications that are customized for your use case and deliver real-time performance. This repo provides API definitions and other shared components used throughout the project.
+NVIDIA Nemotron Speech is a GPU-accelerated SDK for building Speech AI applications that are customized for your use case and deliver real-time performance. This repo provides API definitions and other shared components used throughout the project.
 
 ## gRPC & Protocol Buffers
 
-Riva clients use [gRPC](https://grpc.io) to communicate with the Riva server. The APIs and message types are defined in `riva/proto`. Complete API documentation is available in the [Riva user documentation](https://docs.nvidia.com/deeplearning/riva/user-guide/docs/reference/protos/protos.html).
+Nemotron Speech clients use [gRPC](https://grpc.io) to communicate with the Riva server. The APIs and message types are defined in `nemotronspeech/proto`. Complete API documentation is available in the [Nemotron Speech user documentation](https://docs.nvidia.com/deeplearning/riva/user-guide/docs/reference/protos/protos.html).
 
 ### Compile Protocol Buffers
 
@@ -18,7 +18,7 @@ make golang
 
 ## Client Packages
 
-NVIDIA offers Riva client packages which include various language-specific bindings for the protocol buffers:
+NVIDIA offers Nemotron Speech client packages which include various language-specific bindings for the protocol buffers:
 
 * **C++**: [nvidia-riva/cpp-clients](https://github.com/nvidia-riva/cpp-clients)
 * **Python**: [nvidia-riva/python-clients](https://github.com/nvidia-riva/python-clients)
@@ -27,4 +27,4 @@ NVIDIA offers Riva client packages which include various language-specific bindi
 
 Submit [GitHub issues](https://github.com/nvidia-riva/common/issues) for bugs and requests.
 
-Visit the [NVIDIA Riva developer forum](https://forums.developer.nvidia.com/c/ai-data-science/deep-learning/riva/475) for questions and discussions.
+Visit the [NVIDIA Nemotron Speech developer forum](https://forums.developer.nvidia.com/c/ai-data-science/deep-learning/riva/475) for questions and discussions.

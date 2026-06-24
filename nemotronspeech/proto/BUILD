@@ -12,53 +12,53 @@ package(default_visibility = ["//visibility:public"])
 load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 
 cc_grpc_library(
-    name = "riva_audio_proto",
+    name = "nemotron_audio_proto",
     srcs = [
-        ":riva_audio.proto"
+        ":nemotron_audio.proto"
     ],
     deps = [],
 )
 
 cc_grpc_library(
-    name = "riva_common_proto",
+    name = "nemotron_common_proto",
     srcs = [
-        ":riva_common.proto"
+        ":nemotron_common.proto"
     ],
     deps = [],
 )
 
 cc_grpc_library(
-    name = "riva_grpc_asr",
-    srcs = [":riva_asr.proto"],
-    deps = [":riva_audio_proto", ":riva_common_proto"],
+    name = "nemotron_grpc_asr",
+    srcs = [":nemotron_asr.proto"],
+    deps = [":nemotron_audio_proto", ":nemotron_common_proto"],
 )
 
 cc_grpc_library(
-    name = "riva_grpc_tts",
-    srcs = [":riva_tts.proto"],
-    deps = [":riva_audio_proto", ":riva_common_proto"],
+    name = "nemotron_grpc_tts",
+    srcs = [":nemotron_tts.proto"],
+    deps = [":nemotron_audio_proto", ":nemotron_common_proto"],
 )
 
 cc_grpc_library(
-    name = "riva_grpc_nlp",
-    srcs = [":riva_nlp.proto"],
-    deps = [":riva_common_proto"],
+    name = "nemotron_grpc_nlp",
+    srcs = [":nemotron_nlp.proto"],
+    deps = [":nemotron_common_proto"],
 )
 
 cc_grpc_library(
-    name = "riva_grpc_nmt",
-    srcs = [":riva_nmt.proto"],
+    name = "nemotron_grpc_nmt",
+    srcs = [":nemotron_nmt.proto"],
     deps = [
-         ":riva_audio_proto",
-         ":riva_grpc_tts",
-         ":riva_grpc_asr",
-         ":riva_common_proto",
+         ":nemotron_audio_proto",
+         ":nemotron_grpc_tts",
+         ":nemotron_grpc_asr",
+         ":nemotron_common_proto",
          ]
 )
 
 
 cc_grpc_library(
-    name = "riva_grpc_health",
+    name = "nemotron_grpc_health",
     srcs = [":health.proto"],
     deps = []
 )

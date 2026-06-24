@@ -8,7 +8,7 @@ package nvidia.riva.nlp;
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
 
-import "riva/proto/riva_common.proto";
+import "nemotronspeech/proto/nemotron_common.proto";
 
 /* Riva Natural Language Services implement generic and task-specific APIs.
  * The generic APIs allows users to design

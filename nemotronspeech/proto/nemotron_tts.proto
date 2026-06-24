@@ -8,8 +8,8 @@ package nvidia.riva.tts;
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
 
-import "riva/proto/riva_audio.proto";
-import "riva/proto/riva_common.proto";
+import "nemotronspeech/proto/nemotron_audio.proto";
+import "nemotronspeech/proto/nemotron_common.proto";
 
 service RivaSpeechSynthesis {
   // Used to request text-to-speech from the service. Submit a request

@@ -12,10 +12,10 @@ package nvidia.riva.nmt;
 
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
-import "riva/proto/riva_common.proto";
-import "riva/proto/riva_audio.proto";
-import "riva/proto/riva_asr.proto";
-import "riva/proto/riva_tts.proto";
+import "nemotronspeech/proto/nemotron_common.proto";
+import "nemotronspeech/proto/nemotron_audio.proto";
+import "nemotronspeech/proto/nemotron_asr.proto";
+import "nemotronspeech/proto/nemotron_tts.proto";
 
 /*
  *  RivaTranslation service provides rpcs to translate between languages.

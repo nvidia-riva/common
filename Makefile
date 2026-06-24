@@ -1,5 +1,5 @@
 DST_DIR ?= .
-SRC_DIR ?= ./riva/proto
+SRC_DIR ?= ./nemotronspeech/proto
 
 setup:
 	@mkdir -p ${DST_DIR}
@@ -33,7 +33,7 @@ python: setup
 	python3 -m grpc_tools.protoc --python_out=${DST_DIR} \
 		--grpc_python_out=${DST_DIR} \
 		-I=. ${SRC_DIR}/*.proto
-	@sed -i -r 's/from riva.proto import (.+_pb2.*)/from . import \1/g' ${DST_DIR}/riva/proto/*_pb2*.py
+	@sed -i -r 's/from nemotronspeech.proto import (.+_pb2.*)/from . import \1/g' ${DST_DIR}/nemotronspeech/proto/*_pb2*.py
 .PHONY: python
 
 clean:

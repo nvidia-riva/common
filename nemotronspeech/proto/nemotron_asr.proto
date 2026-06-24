@@ -23,8 +23,8 @@ package nvidia.riva.asr;
 option cc_enable_arenas = true;
 option go_package = "nvidia.com/riva_speech";
 
-import "riva/proto/riva_audio.proto";
-import "riva/proto/riva_common.proto";
+import "nemotronspeech/proto/nemotron_audio.proto";
+import "nemotronspeech/proto/nemotron_common.proto";
 
 /*
  * The RivaSpeechRecognition service provides two mechanisms for converting
