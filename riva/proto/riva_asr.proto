@@ -448,4 +448,9 @@ message StreamingRecognitionResult {
 
   // Message for pipeline states
   optional PipelineStates pipeline_states = 7;
+
+  // Processing latency in milliseconds for this response.
+  // Server-side processing latency in milliseconds: the delay between the audio
+  // chunk that produced this result arriving and the result being returned.
+  optional float processing_latency_ms = 8;
 }
