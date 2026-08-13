@@ -94,9 +94,29 @@ message SynthesizeSpeechRequest {
   // Currently recognized keys include "exaggeration_factor".
   map<string, string> custom_configuration = 8;
 
+  // If `true`, the response metadata includes a list of words and the start
+  // and end time offsets (timestamps) for those words, when the model supports
+  // alignment (currently Magpie TTS). Has no effect for models that do not
+  // produce word alignment.
+  bool enable_word_time_offsets = 9;
+
   // The ID to be associated with the request. If provided, this will be
   // returned in the corresponding response.
   RequestId id = 100;
+}
+
+// Word-specific timing information for a synthesized word.
+message WordTiming {
+  // The word this timing corresponds to.
+  string word = 1;
+
+  // Time offset relative to the beginning of the synthesized audio in
+  // milliseconds, corresponding to the start of the spoken word.
+  int32 start_time = 2;
+
+  // Time offset relative to the beginning of the synthesized audio in
+  // milliseconds, corresponding to the end of the spoken word.
+  int32 end_time = 3;
 }
 
 message SynthesizeSpeechResponseMetadata {
@@ -108,6 +128,10 @@ message SynthesizeSpeechResponseMetadata {
   string text = 1;
   string processed_text = 2;
   repeated float predicted_durations = 8;
+
+  // List of word-level timing information. Only populated when the request set
+  // `enable_word_time_offsets=true` and the model produces word alignment.
+  repeated WordTiming words = 9;
 }
 
 message SynthesizeSpeechResponse {
