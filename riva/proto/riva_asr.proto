@@ -301,6 +301,9 @@ message RecognizeResponse {
   // sequential portions of audio. Currently only returns one transcript.
   repeated SpeechRecognitionResult results = 1;
 
+  // Total audio processed in seconds, independent of transcription results.
+  float audio_processed = 2;
+
   // The ID associated with the request
   RequestId id = 100;
 }
@@ -405,6 +408,9 @@ message StreamingRecognizeResponse {
   // Currently one result is returned, where each result can have multiple
   // alternatives
   repeated StreamingRecognitionResult results = 1;
+
+  // Cumulative audio processed in seconds since the start of this stream.
+  float audio_processed = 2;
 
   // The ID associated with the request
   RequestId id = 100;
